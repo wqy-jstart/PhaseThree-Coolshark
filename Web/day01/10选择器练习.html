@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    /*类选择器*/
+    .r1,.r2{color: blue}
+    /*分组选择器*/
+    #r1,#r2,#r3,.r2{
+      background-color: yellow;
+    }
+    input[type='submit']{background-color: red}
+    input[type='button']{color: pink}
+    *{
+      border: 1px solid red;
+    }
+  </style>
+
+</head>
+<body>
+<ul>
+  <li style="color: green">张学友</li>
+  <li class="r1">刘德华</li>
+  <li>郭富城</li>
+</ul>
+<h1 class="r2">悟空</h1>
+<h1 id="r1">八戒</h1>
+<h1 id="r2">唐僧</h1>
+<h1 id="r3">沙僧</h1>
+<h2 class="r2">刘备</h2>
+<input type="submit">
+<input type="button" value="按钮">
+</body>
+</html>
