@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    #d1{
+      width: 100px;
+      height: 100px;
+      border: 1px solid red;
+      /*!*单独某一个方向添加外边距*!*/
+      /*margin-top: 100px;!*上外边距,距上边为100像素*!*/
+      /*margin-left: 50px;!*左外边距,距左边为50像素*!*/
+      /*margin-bottom: 50px;!*下外边距,局下边为50像素*!*/
+      /*margin-right: 50px;!*右外边距,距右边为50像素*!*/
+      /*四个方向同时添加*/
+      margin: 50px;
+      /*上下和左右赋值*/
+      margin: 50px 100px;
+      /*居中写法*/
+      margin: 0 auto;
+      /*上右下左顺时针赋值*/
+      margin: 10px 20px 30px 40px;
+    }
+    #d2{
+      width: 100px;
+      height: 100px;
+      border: 1px solid blue;
+      /*上下相邻彼此添加外边距,取最大值*/
+      margin-top: 50px;/*距上边50像素*/
+    }
+    /*行内元素上下外边距无效 左右有效*/
+    #s1{margin-right: 50px}
+    /*左右相邻彼此添加外边距,两者相加*/
+    #s2{margin-left: 50px}
+    #big{
+      width: 200px;
+      height: 200px;
+      background-color: green;
+      overflow: hidden;/*给上级元素加over:hidden*/
+    }
+    #big>div{
+      width: 50px;
+      height: 50px;
+      background-color: purple;
+      margin-left: 50px;
+      margin-top: 50px;
+      /*当元素的上边缘和上级元素的上边缘重叠时,给元素添加上外边距
+      会出现粘连问题,给上级元素添加overflow:hidden样式解决*/
+    }
+  </style>
+</head>
+<body>
+<div id="big">
+  <div></div>
+</div>
+<span id="s1">span1</span><span id="s2">span2</span>
+<div id="d1"></div><div id="d2"></div>
+</body>
+</html>

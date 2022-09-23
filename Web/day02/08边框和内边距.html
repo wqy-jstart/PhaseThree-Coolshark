@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #d1{
+            width: 200px;
+            height: 200px;
+            border: 10px groove red;
+            border-radius: 5px;/*边框圆角,像素越大越圆 最圆为宽高一半+边框粗细*/
+        }
+        #d2{
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            /*内边距会影响元素的显示尺寸*/
+            padding-left: 50px;/*内容距左边50像素*/
+            padding-top: 50px;/*内容距上边50像素*/
+            /*添加样式后,给元素添加边框和内边距时不会影响元素的宽高*/
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div id="d1">边框测试</div>
+<div id="d2">内边距</div>
+</body>
+</html>
