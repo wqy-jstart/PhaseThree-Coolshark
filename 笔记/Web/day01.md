@@ -73,22 +73,21 @@
 
 ```html
 <form action="http://www.tmooc.cn">
-    <!--所有控件必须添加name属性 否则将不会提交参数
-    maxlength最大字符长度 value设置默认值 readonly只读 -->
-    用户名:<input type="text" name="username" maxlength="5"
-               value="abc" readonly
+    <!--所有控件必须添加name属性,否则将不会提交参数
+maxlength最大字符长度 value设置默认值 readonly只读  placeholder占位符提示输入指定内容-->
+    用户名:<input type="text" name="name" maxlength="5"
+               value="2168149199" readonly
                placeholder="用户名"><br>
     密码:<input type="password" name="password" placeholder="密码"><br>
-    <!--单选的value属性必须添加 否则提交的是on checked默认选中 -->
-    性别:<input type="radio" name="gender" value="m" id="r1">
-    <label for="r1">男</label>
-    <input type="radio" name="gender" checked value="w" id="r2">
+    <!--单选radio的value属性必须添加 否则提交的是on checked默认选中-->
+    性别:<input type="radio" name="gender" checked value="man" id="r1">
+    <label for="r1">男</label> <!--扩大点击范围-->
+    <input type="radio" name="gender" value="woman" id="r2">
     <label for="r2">女</label><br>
-    <!--多选属性和单选属性写法一样-->
-    兴趣爱好:<input type="checkbox" name="hobby" value="cy">抽烟
-    <input type="checkbox" name="hobby"
-           checked value="hj">喝酒
-    <input type="checkbox" name="hobby" value="tt">烫头<br>
+    <!--多选checkbox属性和单选属性写法一样  value和checked...-->
+    兴趣爱好:<input type="checkbox" name="hobby" value="cy">看书
+    <input type="checkbox" name="hobby" value="hj">写字
+    <input type="checkbox" name="hobby"  checked value="tt">绘画<br>
     <!--日期选择器-->
     生日:<input type="date" name="birthday"><br>
     <!--文件选择器-->
@@ -96,15 +95,18 @@
     <!--下拉选-->
     所在地:
     <select name="city">
-        <!--value设置提交的内容, 如果没有value则提交标签体的文本-->
-        <option value="bj">北京</option>
-        <!--selected设置默认选中-->
-        <option selected value="sh">上海</option>
-        <option value="gz">广州</option>
+        <!--value设置提交的内容,如果没有value则提交标签体的文本-->
+        <option value="京">北京</option>
+        <option selected value="沪">上海</option>
+        <option value="粤">广州</option>
+        <option value="云">云南</option>
+        <!--selected 默认选中-->
+        <option value="贵">贵州</option>
+        <option value="川">四川</option>
     </select><br>
     <input type="submit" value="注册">
     <input type="reset" value="重新设置">
-    <!--自定义按钮-->
+    <!--自定义按钮button-->
     <input type="button" value="按钮">
     <hr>
     <button type="submit">注册</button>
