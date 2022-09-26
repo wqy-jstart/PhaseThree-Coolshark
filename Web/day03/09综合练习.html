@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            font: 12px "simhei", Arial, Helvetica, sans-serif;
+            color: #666;
+        }
+        body>div{
+            width: 1000px;
+            margin: 0 auto;/*块级元素居中*/
+        }
+        #t_div>div,#b_l_div,#b_r_div>div{
+            background-color: #E8E8E8;
+        }
+        #t_l_div{
+            width: 611px;
+            height: 376px;
+            float: left;
+            position: relative;/*相对定位做参照物*/
+        }
+        #t_r_div{
+            width: 375px;
+            height: 376px;
+            float: right;
+            position: relative;/*相对定位做参照物*/
+        }
+        body>div>div{
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        #b_l_div{
+            width: 366px;
+            height: 233px;
+            float: left;/*左侧浮动*/
+        }
+        #b_r_div{
+            float: right;
+        }
+        #b_r_div>div{
+            width: 198px;
+            height: 233px;
+            float: left;
+            margin-left: 10px;
+        }
+/*=====================================================================================================*/
+        #t_l_div>img{
+            width: 318px;
+            height: 319px;
+            position: absolute;/*绝对定位*/
+            right: 20px;
+            top: 40px;
+            /*设置动画持续时间 单位s是秒*/
+            transition-duration: 2s;
+        }
+        #t_l_div>img:hover{
+            transform: scale(1.1);
+        }
+        #t_l_div>div{
+            width: 245px;
+            height: 232px;
+            margin: 68px 0 0 36px;
+        }
+        #t_l_div>div>.title_p1{
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        #t_l_div>div>.price_p1{
+            font-size: 24px;
+            font-weight: bold;/*加粗*/
+            color: #0aa1ed;
+            margin-bottom: 12px;
+        }
+        #t_l_div>div>a{
+            background-color: #0aa1ed;
+            width: 132px;
+            height: 40px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            line-height: 40px;
+            color: white;
+            font-size: 20px;
+            border-radius: 3px;
+        }
+/*=====================================================================================================*/
+        #t_r_div>img{
+            width: 292px;
+            height: 232px;
+            position: absolute;/*绝对定位*/
+            right: 20px;
+            bottom: 20px;
+            transition-duration: 2s;
+        }
+        #t_r_div>img:hover{
+            transform: scale(1.1);
+        }
+        #t_r_div>div{
+            width: 260.97px;
+            height: 239.98px;
+            margin: 39px 0 0 25px;
+        }
+        #t_r_div>div>.title_p2{
+            font-size: 32px;
+            color: #333333;
+            margin-bottom: 12px;
+            font-weight: bold;/*设置字体粗细*/
+        }
+        #t_r_div>div>.price_p2{
+            font-size: 24px;
+            font-weight: bold;
+            color: #0aa1ed;
+            margin-bottom: 12px;/*设置下外边距的距离*/
+        }
+        #t_r_div>div>a{
+            background-color: #0aa1ed;
+            width: 132px;
+            height: 40px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            line-height: 40px;
+            color: white;
+            font-size: 20px;
+            border-radius: 3px;
+        }
+/*============================================================================================================*/
+        #b_l_div>#top_div{/*id选择器*/
+            height: 35px;/*该部分的高,宽已经继承*/
+            background-color: #0aa1ed;
+            border-radius: 2px;
+        }
+        #b_l_div>div{
+            padding-left: 10px;
+        }
+        #top_div>img{/*图片*/
+            margin-top: 8px;
+        }
+        #top_div>span{
+            color: white;
+            font-size: 16px;
+            position: relative;/*对某个元素微调时用相对定位*/
+            bottom: 5px;
+        }
+        p,ul{
+            margin: 0;
+            padding: 0;
+        }
+        #b_l_div>.c1>ul{
+            list-style-type: none;
+            overflow: hidden;
+        }
+        .c1>p{
+            color: #62b5ec;
+            margin: 20px 0 10px 0;
+        }
+        #b_l_div>.c1>ul>li{
+            float: left;
+            margin-right: 10px;
+        }
+        a{
+            text-decoration: none;
+            color: #0aa1ed;
+        }
+        a:hover{
+            color: #0a7eb8;
+        }
+/*============================================================================================================*/
+        #b_r_div>div>img{
+            transition-duration: 2s;
+        }
+        #b_r_div>div>img:hover{
+            transform: scale(1.1);
+        }
+        #b_r_div>div{
+            box-sizing: border-box;
+            text-align: center;
+        }
+        #b_r_div>div>.title_p3{
+            font-size: 12px;
+            color: #000000;
+            margin-top: 0;
+            margin-bottom: 6px;
+        }
+        #b_r_div>div>.price_p3{
+            margin: 6px 0;
+            font-weight: bold;
+            color: #0aa1ed;
+        }
+        #b_r_div>div>a{
+            width: 100px;
+            height: 24px;
+            background-color: #0aa1ed;
+            line-height: 24px;
+            display: block;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            margin: 0 auto;
+        }
+/*============================================================================================================*/
+    </style>
+</head>
+<body>
+<div>
+    <div id="t_div">
+        <div id="t_l_div">
+            <div>
+                <p class="title_p1">灵越 燃7000系列</p>
+                <p class="intro_p1">酷睿双核i5处理器|256GB SSD| 8GB内存<br>
+                    英特尔HD显卡620含共享显卡内存</p>
+                <p class="price_p1">￥4999.00</p>
+                <a href="">查看详情</a>
+            </div>
+            <img src="http://doc.canglaoshi.org/tstore_v1/images/itemCat/study_computer_img1.png">
+        </div>
+        <div id="t_r_div">
+            <div>
+                <p class="title_p2">颜值 框不住</p>
+                <p class="intro_p2">酷睿双核i5处理器|256GB SSD| 8GB内存<br>
+                    英特尔HD显卡620含共享显卡内存</p>
+                <p class="price_p2">￥6888.00</p>
+                <a href="">查看详情</a>
+            </div>
+            <img src="http://doc.canglaoshi.org/tstore_v1/images/itemCat/study_computer_img2.png"alt="">
+        </div>
+    </div>
+    <div id="b_div">
+        <div id="b_l_div">
+            <div id="top_div">
+                <img src="http://doc.canglaoshi.org/tstore_v1/images/itemCat/computer_icon1.png" alt="">
+                <span>电脑,办公/1F</span>
+            </div>
+            <div class="c1">
+                <p style="color: #0aa1ed">电脑整机</p>
+                <ul>
+                    <li><a href="">笔记本</a></li>
+                    <li><a href="">游戏机</a></li>
+                    <li><a href="">台式机</a></li>
+                    <li><a href="">一体机</a></li>
+                    <li><a href="">服务器</a></li>
+                    <li><a href="">联想</a></li>
+                </ul>
+            </div>
+            <div class="c1">
+                <p style="color: #0aa1ed">电脑配件</p>
+                <ul>
+                    <li><a href="">CPU</a></li>
+                    <li><a href="">SSD硬盘</a></li>
+                    <li><a href="">显示器</a></li>
+                    <li><a href="">显卡</a></li>
+                    <li><a href="">组装电脑</a></li>
+                    <li><a href="">机箱</a></li>
+                </ul>
+            </div>
+            <div class="c1">
+                <p style="color: #0aa1ed">外设/游戏</p>
+                <ul>
+                    <li><a href="">键盘</a></li>
+                    <li><a href="">鼠标</a></li>
+                    <li><a href="">U盘</a></li>
+                    <li><a href="">移动硬盘</a></li>
+                    <li><a href="">游戏设备</a></li>
+                    <li><a href="">智能单车</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="b_r_div">
+            <div>
+                <img src="http://doc.canglaoshi.org/tstore_v1/images/itemCat/study_computer_img3.png" alt="">
+                <p class="title_p3">戴尔(DELL)XPS13-9360-R1609 13.3英<br>
+                    寸微边框笔记本电脑</p>
+                <p class="price_p3">￥4600.00</p>
+                <a href="">查看详情</a>
+            </div>
+            <div>
+                <img src="http://doc.canglaoshi.org/tstore_v1/images/itemCat/study_computer_img4.png" alt="">
+                <p class="title_p3">14.8mm超轻薄笔记本电脑 航海王版<br>
+                    13.3英寸微边框笔记本电脑</p>
+                <p class="price_p3">￥5600.00</p>
+                <a href="">查看详情</a>
+            </div>
+            <div>
+                <img src="http://doc.canglaoshi.org/tstore_v1/images/itemCat/study_computer_img5.png" alt="">
+                <p class="title_p3">联想(Lenovo) YOGA900 多彩版 13.3<br>
+                    英寸微边框笔记本电脑</p>
+                <p class="price_p3">￥6600.00</p>
+                <a href="">查看详情</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

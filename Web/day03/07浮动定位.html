@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body>div{
+            width: 200px;
+            /*height: 200px;如果不加高度则是内容的高度*/
+            border: 1px solid red; /*给大的div加边框*/
+            overflow: hidden;/*解决元素全部浮动至一行时高度为0的问题*/
+        }
+        div>div{
+            width: 50px;
+            height: 50px;
+        }
+        #d1{
+            background-color: red;
+            float: left;
+        }
+        #d2{
+            background-color: green;
+            float: left;
+        }
+        #d3{
+            background-color: blue;
+            float: left;
+        }
+        p{
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            margin: 0;
+        }
+        ul{
+            list-style-type: none;/*去除无序列表的点*/
+            margin: 0;
+            padding: 0;
+            overflow: hidden;/*解决高度为0的显示异常*/
+        }
+        li{
+            float: left;
+            margin-right: 20px;
+        }
+        /*添加伪类选择器*/
+        /*未访问*/
+        a:link{color: green;}
+        /*访问过*/
+        a:visited{color: red}
+        /*悬停*/
+        a:hover{color: yellow}
+        /*点击或激活*/
+        a:active{color: blue}
+    </style>
+</head>
+<body>
+<ul>
+    <li><a href="">首页</a></li>
+    <li><a href="">免费课</a></li>
+    <li><a href="">直播课</a></li>
+    <li><a href="">线上班</a></li>
+    <li><a href="">线下班</a></li>
+</ul>
+<div><!--设置浮动内容高度为0-->
+    <div id="d1"></div>
+    <div id="d2"></div>
+    <div id="d3"></div>
+</div>
+<p></p>
+</body>
+</html>

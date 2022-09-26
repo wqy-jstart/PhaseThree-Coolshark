@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            /*important重要的,加了它就会提高优先级*/
+            background-color: green !important;
+        }
+        #d1{
+            color: red;
+            background-color: blue;/*id选择器优先级高*/
+        }
+    </style>
+</head>
+<body>
+<div id="d1">
+    <p>这是p标签</p>
+    <span>这是span</span>
+    <a href="">这是超链接</a><!--标签自带的属性不受继承的影响-->
+</div>
+</body>
+</html>
