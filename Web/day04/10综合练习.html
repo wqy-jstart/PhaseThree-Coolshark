@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text">
+<input type="button" value="帅哥" onclick="f(1)">
+<input type="button" value="美女" onclick="f(2)">
+<hr>
+<script>
+    function f(x) {
+        // let url = x == 1 ? "a.jpg" : "b.jpg"
+        // let i = document.createElement("img");
+        // i.src = url;
+        // document.body.append(i);
+        let a = document.querySelector("input")
+        if (x == 1) {
+            for (let i = 0; i < a.value; i++) {
+                let img = document.createElement("img");
+                img.src = "a.jpg";
+                document.body.append(img);
+            }
+        } else if (x == 2) {
+            for (let i = 0; i < a.value; i++) {
+                let img = document.createElement("img");
+                img.src = "b.jpg";
+                document.body.append(img);
+            }
+        }
+    }
+</script>
+</body>
+</html>

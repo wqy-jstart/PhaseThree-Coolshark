@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="按钮" onclick="f1()">
+<script>
+  //1.无参无返回值的方法
+  function f1() {
+    console.log("f1")/*该方法输出f1*/
+  }
+  //调用方法
+  f1();
+  //2.有参无返回值
+  function f2(name,age){
+    console.log(name+":"+age);/*该方法输出name和age*/
+  }
+  f2("刘备",18);//调用时传参自动输出结果
+  //3.无参有返回值
+  function f3() {
+    return"这是返回值";/*该方法调用后返回字符串的内容*/
+  }
+  let info = f3();//用let接收传入console.log中
+  console.log(info);
+  //4.有参有返回值
+  function f4(x,y) {
+    return x*y;/*该方法计算传入参数的积*/
+  }
+  let result = f4(8,9);//传参并接收
+  console.log(result);
+  //第二种声明方法的方式
+  let f5 = function (name,age) {
+    console.log(name+":"+age);
+  }
+  f5("张飞",30);
+  //第三种声明方法的方式
+  let f6 = new Function("name","age","console.log(name+':'+age)");
+  f6("关羽",20);
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--溢出设置-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    div{
+      width: 100px;
+      height: 100px;
+      border: 1px solid red;
+      /*设置超出部分的显示效果
+      visible 显示(默认)
+      hidden 隐藏
+      scroll 滚动显示
+      */
+      overflow: scroll;
+    }
+    img{
+      /*行内元素垂直对其方式:top,middle,bottom,baseline基线对齐(默认)*/
+      vertical-align: bottom;/*文本框上对齐*/
+      margin-top: 50px;/*会带着其他元素移动*/
+    }
+  </style>
+</head>
+<body>
+<input type="text"><img src="../day01/abc/c.jpg" width="100" alt="">
+<div>
+  <img src="../b.jpg" alt="">
+</div>
+</body>
+</html>

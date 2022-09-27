@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*当元素脱离文档流后可能出现元素层叠显示的问题,通过z-index来设置层级*/
+        /*显示层级z-index*/
+        #d1{
+            width: 200px;
+            height: 100px;
+            background-color: red;
+            position: absolute;/*绝对定位,脱离文档流,后面的元素会顶上来*/
+            z-index: 3;/*值越大显示越靠前*/
+        }
+        #d2{
+            width: 100px;
+            height: 200px;
+            background-color: blue;
+            position: absolute;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+<div id="d1"></div>
+<div id="d2"></div>
+</body>
+</html>
