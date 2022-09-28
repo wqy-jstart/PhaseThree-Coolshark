@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="i1" type="text" placeholder="用户名">
+<input id="i2" type="text" placeholder="密码">
+<input id="i3" type="text" placeholder="昵称">
+<input type="button" value="添加" onclick="f()">
+<table border="1" width="700">
+    <caption>用户信息</caption>
+    <tr>
+        <td>用户名</td>
+        <td>密码</td>
+        <td>昵称</td>
+    </tr>
+</table>
+<script>
+    //实例化对象 空对象
+    let p1 = {}
+    //动态添加属性和方法
+    p1.name = "张三";
+    p1.age = 18;
+    p1.run = function () {
+        console.log(this.name + ":" + this.age);
+    }
+    //调用对象方法
+    p1.run();
+    //实例化自带属性和方法的对象
+    let p2 = {
+        name: "李四",
+        age: 18,
+        run: function () {
+            console.log(this.name + ":" + this.age);
+        }
+    }
+    //调用方法
+    p2.run();
+
+    //将多个信息封装到一个对象中
+    let arr = [{username: "Devotion", password: "123456", nickname: "鹤辞"},
+        {username: "FlowerSea", password: "1008611", nickname: "时过境迁"},
+        {username: "StoryCored", password: "19887962", nickname: "故氏"}]
+    let table = document.querySelector("table");
+    for (const user of arr) {
+        let tr = document.createElement("tr");
+        let userTd = document.createElement("td");
+        let passTd = document.createElement("td");
+        let nickTd = document.createElement("td");
+        userTd.innerText = user.username;
+        passTd.innerText = user.password;
+        nickTd.innerText = user.nickname;
+        tr.append(userTd, passTd, nickTd);
+        //把tr装进table中
+        table.append(tr);
+    }
+
+    function f() {//该方法可以根据输入框的内容存到表格中(非定死)
+        let tr = document.createElement("tr");
+        let nameTd = document.createElement("td");
+        let salTd = document.createElement("td");
+        let jobTd = document.createElement("td");
+        nameTd.innerText = i1.value;//将输入的值赋到td标签中(获取值要用value)
+        salTd.innerText = i2.value;
+        jobTd.innerText = i3.value;
+        //再把3个td添加到tr标签中
+        tr.append(nameTd, salTd, jobTd);
+        //获取标签table
+        let table = document.querySelector("table");
+        table.append(tr);//将tr标签添加到table中
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1" width="700">
+    <caption>商品列表</caption>
+    <tr>
+        <td>商品标题</td>
+        <td>商品价格</td>
+        <td>商品销量</td>
+    </tr>
+</table>
+<script>
+    //实例化对象 空对象
+    let p1 = {};
+    //动态添加属性和方法
+    p1.name = "张三";
+    p1.age = 18;
+    p1.run = function () {
+        console.log(this.name + ":" + this.age);
+    }
+    //调用对象方法
+    p1.run();
+    //实例化自带属性和方法的对象
+    let p2 = {
+        name: "李四",
+        age: 20,
+        run: function () {
+            console.log(this.name + ":" + this.age);
+        }
+    }
+    //调用方法
+    p2.run();
+
+    //将多个信息封装到一个对象中
+    let arr = [{title: "小米手机", price: 5000, saleCount: 200},
+        {title: "李宁篮球鞋", price: 500, saleCount: 100},
+        {title: "华为电视", price: 4000, saleCount: 20},
+        {title: "苹果14pro max", price: 10000, saleCount: 2}]
+    let table = document.querySelector("table")
+    for (const product of arr) {
+        let tr = document.createElement("tr");
+        let titleTd = document.createElement("td");
+        let priceTd = document.createElement("td");
+        let saleCountTd = document.createElement("td");
+        titleTd.innerText = product.title;
+        priceTd.innerText = product.price;
+        saleCountTd.innerText = product.saleCount;
+        tr.append(titleTd,priceTd,saleCountTd);
+        //把tr装进table中
+        table.append(tr);
+    }
+</script>
+</body>
+</html>

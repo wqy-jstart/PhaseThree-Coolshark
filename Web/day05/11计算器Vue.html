@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        h1{
+            font-family: 新宋体;
+            color: #0aa1ed;
+            text-shadow: #0a7eb8 5px 5px 3px;
+            font-weight: bold;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="r1">
+    <input type="text" v-model="r2">
+    <input type="button" value="加" @click="f(1)">
+    <input type="button" value="减" @click="f(2)">
+    <input type="button" value="乘" @click="f(3)">
+    <input type="button" value="除" @click="f(4)">
+    <hr>
+    <h1>结果:{{result}}</h1>
+</div>
+<script src="js/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "#app",//并非写死
+        data: {
+            result: "", r1: "", r2: ""
+        },
+        //1.利用switch case(建议)
+        methods:{
+            f(x){
+                if (isNaN(v.r1)||isNaN(v.r2)){
+                    v.result="输入错误!";
+                    return;
+                }
+                switch (x) {
+                    case 1:
+                        v.result = v.r1*1+v.r2*1;
+                        break;
+                    case 2:
+                        v.result = v.r1-v.r2;
+                        break;
+                    case 3:
+                        v.result = v.r1*v.r2;
+                        break;
+                    case 4:
+                        v.result = v.r1/v.r2;
+                        break;
+                }
+            }
+        }
+        //2.使用传统调用(繁琐)
+        // methods: {
+        //
+        //     f1() {
+        //         if (isNaN(v.r1)||isNaN(v.r2)){
+        //             v.result="输入错误!";
+        //             return;
+        //         }
+        //         v.result = parseInt(v.r1) + parseInt(v.r2);
+        //     },
+        //     f2() {
+        //         if (isNaN(v.r1)||isNaN(v.r2)){
+        //             v.result="输入错误!";
+        //             return;
+        //         }
+        //         v.result = v.r1 - v.r2;
+        //     },
+        //     f3() {
+        //         if (isNaN(v.r1)||isNaN(v.r2)){
+        //             v.result="输入错误!";
+        //             return;
+        //         }
+        //         v.result =  v.r1 * v.r2;
+        //     },
+        //     f4() {
+        //         if (isNaN(v.r1)||isNaN(v.r2)){
+        //             v.result="输入错误!";
+        //             return;
+        //         }
+        //         v.result =  v.r1 / v.r2;
+        //     }
+        // }
+    })
+</script>
+</body>
+</html>
