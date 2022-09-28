@@ -36,8 +36,9 @@
             height: 233px;
             float: left;/*左侧浮动*/
         }
-        #b_r_div{
-            float: right;
+        body>div>div{
+            overflow: hidden;
+            margin-bottom: 10px;
         }
         #b_r_div>div{
             width: 198px;
@@ -67,6 +68,9 @@
             font-size: 32px;
             color: #333;
             margin-bottom: 12px;
+        }
+        #t_l_div>div>.intro_p1{
+            margin-bottom: 24px;
         }
         #t_l_div>div>.price_p1{
             font-size: 24px;
@@ -109,6 +113,9 @@
             margin-bottom: 12px;
             font-weight: bold;/*设置字体粗细*/
         }
+        #t_r_div>div>.intro_p2{
+            margin-bottom: 24px;
+        }
         #t_r_div>div>.price_p2{
             font-size: 24px;
             font-weight: bold;
@@ -121,11 +128,11 @@
             height: 40px;
             display: block;
             text-align: center;
-            text-decoration: none;
             line-height: 40px;
             color: white;
             font-size: 20px;
-            border-radius: 3px;
+            text-decoration: none;/*去除修饰字体*/
+            border-radius: 3px;/*设定边框圆角*/
         }
 /*============================================================================================================*/
         #b_l_div>#top_div{/*id选择器*/
@@ -201,9 +208,9 @@
             border-radius: 3px;
             margin: 0 auto;
         }
-/*============================================================================================================*/
     </style>
 </head>
+<!--==============================================================================================================-->
 <body>
 <div>
     <div id="t_div">

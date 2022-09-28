@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+    <style>
+        body > div {
+            margin: 60px 0 0 60px;
+        }
+
+        h1 {
+            font-family: 宋体;
+            color: darkslateblue;
+        }
+
+        body > div > input {
+            height: 30px;
+            background-color: #e8e8e8;
+            color: black;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="text" placeholder="姓名" v-model="emp.name"><!--与data中emp对象双向绑定-->
+    <input type="text" placeholder="工作" v-model="emp.job">
+    <input type="text" placeholder="工资" v-model="emp.salary">
+    <el-button type="success" icon="el-icon-loading" @click="add()">添加</el-button><!--事件绑定-->
+    <!--  <input type="button" value="添加" @click="add()">-->
+    <h1>员工列表</h1>
+    <el-table
+            :data="arr"
+            style="width: 100%">
+        <el-table-column type="index" label="编号"></el-table-column>
+        <el-table-column
+                prop="name"
+                label="姓名"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="job"
+                label="工作">
+        </el-table-column>
+        <el-table-column
+                prop="salary"
+                label="工资"
+                width="180">
+        </el-table-column>
+        <el-table-column label="操作">
+            <!--scope里面装着当前行所对应的对象信息
+            scope.$index 得到当前行对应的对象在数组中的下标
+            scope.row 得到当前行对应的对象-->
+            <template slot-scope="scope">
+                <el-button
+                        size="mini"
+                        type="danger"
+                        @click="handleDelete(scope.$index, scope.row)">删除
+                </el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                emp: {name: "", salary: "", job: ""},//文本输入框中绑定的内容
+                arr: [],//定义一个空数组
+            }
+        },
+        methods: {
+            add() {/*点击添加调用add()向数组中添加绑定的值*/
+                v.arr.push({name: v.emp.name, salary: v.emp.salary, job: v.emp.job})
+            },
+            handleDelete(i, emp) {
+                v.$message("您成功删除了" + emp.name + "!");//提示内容
+                v.arr.splice(i, 1);//删除数组中的下标和数量
+            }
+        }
+    })
+</script>
+</html>

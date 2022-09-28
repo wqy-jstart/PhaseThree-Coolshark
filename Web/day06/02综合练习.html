@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <!--表中放入person对象里的属性-->
+    <table border="1">
+        <tr>
+            <td>照片:</td>
+            <td><img :src="person.url" width="100" alt=""></td>
+        </tr>
+        <tr>
+            <td>姓名:</td>
+            <td>{{person.name}}</td>
+        </tr>
+        <tr>
+            <td>年龄:</td>
+            <td>{{person.age}}</td>
+        </tr>
+        <tr>
+            <td>好友:</td>
+            <td>
+                <ul>
+                    <li v-for="name in person.friends">{{name}}</li><!--遍历对象中的数组-->
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <input type="button" value="请求数据" @click="f()"><!--通过该事件向对象中添加属性值-->
+</div>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el:"body>div",
+        data:{
+            person:{}//person对象
+        },
+        methods:{
+            f(){
+                v.person = {name:"张三",age:"18",url:"../b.jpg",
+                        friends:["刘备","关羽","张飞"]};//向person对象中添加属性值值
+            }
+        }
+    })
+</script>
+</body>
+</html>

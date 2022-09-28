@@ -8,12 +8,12 @@
 <div>
     {{info}}
     <!--绑定属性:让元素的某个属性值和变量进行绑定-->
-    <a :href="url">超链接</a>
+    <a :href="url">超链接</a><!--超链接路径属性-->
     <!--下面这种复杂写法如果idea没有安装vue插件会报错,
     在红色错误提示上面alt+回车选择第一个 即可解决-->
     <a v-bind:href="url">超链接</a>
-    <input type="text" :value="url">
-    <img :src="imgUrl" alt="">
+    <input type="text" :value="url"><!--文本框内容属性-->
+    <img :src="imgUrl" alt=""><!--图片路径属性-->
 </div>
 <script src="js/vue.min.js"></script>
 <script>
