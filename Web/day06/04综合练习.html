@@ -8,7 +8,7 @@
 <div>
     <h1>员工管理系统</h1>
     <div v-if="isLogin"><!--刚开始是隐藏的-->
-        <input type="text" v-model="name" placeholder="员工姓名">
+        <input type="text" v-model="name" placeholder="员工姓名"><!--将输入的员工姓名与数据进行绑定便于使用和添加-->
         <input type="button" value="添加" @click="add()">
         <!--避免点击时与注册重叠-->
         <a href="javascript:void(0)" @click="logout()">退出登录</a>
@@ -23,7 +23,7 @@
         <tr>
             <th>编号</th><th>姓名</th><th v-if="isLogin">操作</th>
         </tr>
-        <tr v-for="(name,i) in arr">
+        <tr v-for="(name,i) in arr"><!--遍历数组,将数组中属性的数组利用{{}}放到指定标签内-->
             <td>{{i+1}}</td>
             <td>{{name}}</td>
             <!--和退出登录一同显示-->
@@ -36,21 +36,21 @@
     let v = new Vue({
         el:"body>div",
         data:{
-            isLogin:false,
+            isLogin:false,//刚开始默认隐藏只显示登录页面
             arr:["悟空","八戒","沙僧"],
             name:""
         },
         methods:{
-            login(){
+            login(){//该方法为点击登录显示用户输入框
                 v.isLogin=true;
             },
-            logout(){
+            logout(){//该方法处理退出登录时返回登录状态显示登录框
                 v.isLogin=false;
             },
-            add(){
+            add(){//该方法获取vue中的数据并添加到arr数组中
                 v.arr.push(v.name);
             },
-            del(i){
+            del(i){//该方法实现删除操作,利用splice将数组中的数据删除,可指定删除的下标i和数量
               v.arr.splice(i,1);
             }
         }
