@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+  <style>
+    .el-header{
+      background-color: #b63b1d;
+    }
+    .el-main{
+      background-color: #2334d0;
+      height: 300px;
+    }
+    .el-aside{
+      background-color: #1f83aa;
+    }
+    .el-footer{
+      background-color: #1db624;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <el-container>
+    <!--上下-->
+    <el-header>Header</el-header>
+    <el-main>Main</el-main>
+  </el-container>
+
+  <el-container><!--container容器-->
+    <!--先左后右,右边上中下-->
+    <el-aside width="200px">Aside</el-aside>
+    <el-container>
+      <el-header>Header</el-header><!--上-->
+      <el-main>Main</el-main><!--中-->
+      <el-footer>Footer</el-footer><!--下-->
+    </el-container>
+  </el-container>
+
+  <el-container>
+    <!--先上后下,再左右,右边中下-->
+    <el-header>Header</el-header>
+    <el-container>
+      <el-aside width="200px">Aside</el-aside>
+      <el-container>
+        <el-main>Main</el-main>
+        <el-footer>Footer</el-footer>
+      </el-container>
+    </el-container>
+  </el-container>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+  let v =new Vue({
+    el: '#app',
+    data: function() {
+      return {
+
+      }
+    },
+    methods:{
+
+    }
+  })
+</script>
+</html>
