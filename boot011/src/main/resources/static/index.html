@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index首页</title>
+</head>
+<body>
+<h1>工程首页</h1>
+<!--相对路径:相对于页面所处位置(把页面路径的最后一部分换成href里面的值)
+http://localhost:8080/abc/index.html
+http://localhost:8080/abc/hello
+-->
+<a href="hello">相对路径</a>
+<!--绝对路径:里面由/开头,/代表的是当前项目的根路径
+http://localhost:8080/abc/index.html
+http://localhost:8080/hello
+-->
+<a href="/hello">绝对路径1</a>
+<!--上面的写法会自动识别当前项目的端口号,而下面的这种是写死的,
+所以访问站内资源时推荐上面的写法,访问站外资源时才使用下面的写法
+例如:https://www.baidu.com/
+-->
+<a href="http://localhost:8080/hello">绝对路径2</a>
+<hr>
+<a href="/param.html">测试传参</a>
+<a href="/bmi.html">身体质量指数测试</a>
+<hr>
+<a href="/reg.html">注册</a>
+</body>
+</html>
