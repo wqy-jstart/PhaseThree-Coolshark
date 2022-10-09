@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class UserController {
     @RequestMapping("/reg")
     @ResponseBody
-    public String reg(User user) {
+    public String reg(User user) { //传入User对象,里面封装了用户注册的信息
         System.out.println("user = " + user);
         try ( //与数据库MySQL建立连接,将用户数据插入保存到bbsdb的user表中
               Connection connection = DBUtil.getConnection()//通过DBUtil来获取数据库连接
@@ -50,27 +50,27 @@ public class UserController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public String login(String username, String password) {
+    public String login(String username, String password) { //传入login表单中的用户登录所输入的用户名和密码
         System.out.println("用户名:" + username + ",密码:" + password);
         try (
                 Connection connection = DBUtil.getConnection()
         ) {
-            String sql = "SELECT username,password " +
+            String sql = "SELECT password " +
                     "FROM user " +
-                    "WHERE username=? " +
-                    "AND password=?";
+                    "WHERE username=?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1,username);
-            ps.setString(2,password);
             ResultSet rs = ps.executeQuery();//获取查询的结果集
             if (rs.next()) {//返回true说明查询到了结果
-                System.out.println("登陆成功!");
-            } else {
-                System.out.println("登录失败!");
+                String pw = rs.getString(1);
+                if (pw.equals(password)){
+                    return "登录成功!";
+                }
+                return "登录失败!";
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return "正在处理登录!";
+        return "用户名不存在!";
     }
 }

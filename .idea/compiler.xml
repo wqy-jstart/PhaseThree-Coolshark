@@ -6,8 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="JSD2207-03" />
         <module name="boot011" />
+        <module name="JSD2207-03" />
+        <module name="boot03" />
+        <module name="boot02" />
       </profile>
     </annotationProcessing>
   </component>

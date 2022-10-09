@@ -120,3 +120,40 @@
 
    小于18.5 偏瘦      18.5~24 正常         24~28 微胖     大于28  有点胖了
 
+
+
+### 注册功能步骤:
+
+1. 首页添加 注册超链接 请求 /reg.html
+
+2. 创建reg.html页面   在页面中准备三个文本框分别获取用户输入的用户名 密码和昵称 ,再有一个注册按钮  提交地址为/reg
+
+3. 创建UserController 添加reg方法处理/reg请求,创建User实体类, 在方法的参数列表处声明User 接收传递过来的用户信息
+
+4. 在pom.xml中添加两个依赖 
+
+   ```xml
+   <dependency>
+       <groupId>com.alibaba</groupId>
+       <artifactId>druid</artifactId>
+       <version>1.1.21</version>
+   </dependency>
+   <dependency>
+       <groupId>mysql</groupId>
+       <artifactId>mysql-connector-java</artifactId>
+       <version>8.0.15</version>
+   </dependency>
+   ```
+
+5. 把传奇老师阶段的DBUtil复制到当前工程中
+
+6. 在UserController的reg方法中获取数据库连接 然后通过JDBC代码把User对象中的数据保存到数据库的user表里面
+
+
+
+
+
+### 晚上作业:
+
+- 把注册功能从创建新工程开始 到最终实现完注册   反复写3遍以上  
+

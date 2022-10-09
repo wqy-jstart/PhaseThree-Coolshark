@@ -1,4 +1,4 @@
-package cn.tedu.boot011.util;
+package cn.tedu.boot02.util;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
@@ -9,11 +9,11 @@ import java.sql.SQLException;
  * 数据库工具类
  */
 public class DBUtil {
-    //Druid是阿里提供的数据库连接池,连接池的主要作用：1.控制连接数量 2.重用连接
-    private static DruidDataSource dds;
-    static {//在静态块中加载用户名和密码以及数据库url地址
-        dds = new DruidDataSource();//实例化连接池对象
+    //Druid是阿里云提供的数据库连接池,连接池的主要作用:1.控制连接数量 2.重用连接
+    private  static DruidDataSource dds;
+    static { //在静态块中加载用户名和密码以及数据库url地址
         //设置连接数据库的基本信息：URL,username,password,初始连接数,最大连接数等
+        dds = new DruidDataSource();//实例化连接池
         dds.setUsername("root");//数据库用户名
         dds.setPassword("root");//数据库密码
         dds.setUrl("jdbc:mysql://localhost:3306/bbsdb?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true");
@@ -22,7 +22,7 @@ public class DBUtil {
     }
 
     /**
-     * 获取一个数据库连接
+     * 该方法用来返回数据库的连接
      * @return getConnection()方法
      * @throws SQLException
      */
@@ -31,6 +31,6 @@ public class DBUtil {
            连接池返回的连接是在实际数据库驱动提供的连接对象上包装了一层连接池自己提供的连接对象,这个
             连接对象的close方法并不是真的断开连接，而是将当前连接归还到连接池中。
          */
-        return dds.getConnection();//直接返回该方法获取连接
+        return dds.getConnection();
     }
 }
