@@ -47,3 +47,25 @@
   - 在ProductController中添加update方法处理/update请求
   - 在ProductMapper中创建update方法通过@Update注解进行修饰,
   - 在ProductController里面的update方法中调用mapper的update方法,把接收到的product对象传递到方法中 最后给客户端响应 修改完成.
+
+
+
+### 8080端口被占用
+
+![img](https://uploader.shimo.im/f/id6lhJvtkdLcwliC.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJleHAiOjE2NjUzMDU3NjYsImZpbGVHVUlEIjoidlZBWFZ3YTdHclRqd2xxbSIsImlhdCI6MTY2NTMwNTQ2NiwiaXNzIjoidXBsb2FkZXJfYWNjZXNzX3Jlc291cmNlIiwidXNlcklkIjoyODUxODE5Mn0.c8ky8IHb9lQ6tKhpOX2nLGbbNa-viRChwL1szXIcPk0)
+
+- - 解决方案:
+
+  - - 检查是不是有其它工程正在运行,停止其它工程即可解决
+
+    - 如果没有其它工程在运行仍然占着8080端口:
+
+    - - 修改工程端口号, 在application.properties添加以下内容
+
+        ![1665305546967](1665305546967.png)
+
+- - - - 重启电脑
+
+      - 找到占用8080端口的进制并杀掉进程
+
+        ![1665305567428](1665305567428.png)

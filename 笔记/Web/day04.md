@@ -163,7 +163,7 @@
   - window.isNaN(变量)  判断变量是否是NaN 
   - parseInt()/parseFloat() 将字符串转成整数或小数, 还可以将小数转成整数
   - alert("xxx"); 弹出提示框
-  - confirm("xxx"); 弹出确认框
+  - confirm("xxx"); 弹出确认框 
   - prompt("xxx"); 弹出文本框
   - let timer = setInterval(方法,时间间隔);  开启定时器
   - clearInterval(timer); 停止定时器

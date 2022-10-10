@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+<h1>注册页面</h1>
+<div>
+    <input type="text" placeholder="用户名" @blur="f()" v-model="user.username" required="required">{{info}}<br>
+    <!--@blur失去焦点事件-->
+    <input type="password" placeholder="密码" v-model="user.password" required="required"><br>
+    <input type="text" placeholder="昵称" v-model="user.nickname" required="required"><br>
+    <input type="button" value="注册" @click="reg()"><!--事件绑定-->
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: {
+            user: { //初始化user对象
+                username: '',
+                password: '',
+                nickname: ''
+            },
+            info: ''//初始化info对象
+        },
+        methods: {
+            reg() {//点击注册触发该方法
+                //发送请求
+                axios.post("/reg", v.user).then(function (response) {
+                    if (response.data == 1) {
+                        alert("注册成功!")
+                        location.href = "/";//回到首页
+                    } else {
+                        alert("用户名已存在!")
+                        location.href = "/reg.html";//回到注册页面
+                    }
+                })
+            },
+            f() {
+                axios.get("/check?username=" + v.user.username).then(function (response) {
+                    v.info = response.data;
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>

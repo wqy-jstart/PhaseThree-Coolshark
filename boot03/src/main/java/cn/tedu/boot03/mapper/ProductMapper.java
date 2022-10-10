@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-//★该接口通过获取方法中的参数自动插入到数据库中(★省去手动获取信息和添加到数据库的过程)
+//★该接口通过获取方法中的参数自动插入到数据库中进行增删改查(★省去手动获取信息和添加到数据库的过程)
 public interface ProductMapper {
     //在Mapper接口中书写实体类和数据库中表之间的对应关系
     //Mybatis框架会通过此关系生成JDBC代码.

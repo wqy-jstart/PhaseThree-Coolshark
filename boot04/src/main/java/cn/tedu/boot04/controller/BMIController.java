@@ -1,15 +1,14 @@
-package cn.tedu.boot011.controller;
+package cn.tedu.boot04.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class BMIController {
+
     @RequestMapping("/bmi")
-    @ResponseBody
-    public String BMI(double H,double W){
-        double BMI = W/(H*H);
+    public String bmi(Double h,Double w){ //用包装类接收(包装类比基本类多出一个未赋值状态)
+        double BMI = w/(h*h);
         if (BMI<18.5){
             return "偏瘦";
         }else if (BMI<24){

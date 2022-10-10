@@ -8,6 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="boot011" />
         <module name="JSD2207-03" />
+        <module name="boot05" />
+        <module name="boot04" />
         <module name="boot03" />
         <module name="boot02" />
       </profile>

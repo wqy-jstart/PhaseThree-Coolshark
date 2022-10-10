@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BMI测试</title>
+</head>
+<body>
+<div>
+    <input type="text" placeholder="请输入身高(m)" v-model="h"><!--双向绑定-->
+    <input type="text" placeholder="请输入体重(kg)" v-model="w">
+    <input type="button" value="开始测试" @click="f()"><!--事件绑定-->
+    <h2>{{result}}</h2><!--插值,将文本内容和变量进行绑定-->
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: { //定义绑定的变量值
+            h: '',
+            w: '',
+            result:''
+        },
+        methods: {
+            f() {
+                axios.get("/bmi?h=" + v.h + "&w=" + v.w + "").then(function (response) {
+                    v.result=response.data;//接收响应的数据传给绑定的值
+                    alert(response.data)//弹出提示框(比前者先显示)
+                    // if (response.data<18.5){
+                    //     v.result= "偏瘦";
+                    // }else if (response.data<24){
+                    //     v.result= "正常";
+                    // }else if(response.data<28){
+                    //     v.result= "微胖";
+                    // }else {
+                    //     v.result= "有点胖了";
+                    // }
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>
