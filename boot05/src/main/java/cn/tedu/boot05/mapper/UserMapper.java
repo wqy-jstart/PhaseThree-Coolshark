@@ -4,9 +4,10 @@ import cn.tedu.boot05.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper {@ResponseBody
 
     //处理查询业务
     //1.查询是否存在   2.查询密码返回登录结果
