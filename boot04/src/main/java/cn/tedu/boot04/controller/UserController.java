@@ -41,6 +41,7 @@ public class UserController {
         return "用户名不存在!请<a href='/login.html'>重新登录</a>";
     }
 
+    //处理光标失去焦点事件
     @RequestMapping("/check")
     public String check(String username){
         System.out.println("username = "+username);

@@ -1,6 +1,6 @@
 package cn.tedu.boot04.entity;
 
-//该类封装了商品的所有信息
+//该类封装了Product对象,包含商品的所有信息
 public class Product {
     private Integer id;
     private String title;

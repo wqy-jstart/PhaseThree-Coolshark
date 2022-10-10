@@ -7,7 +7,7 @@
 <body>
 <div>
     <!--异步请求不需要以表单的形式提交,即不需要添加name属性,和submit提交属性,表单提交是同步请求,
-    这里用户输入的信息只需提交到处理业务的方法即可-->
+    这里测试并没有保存用户的信息,只是将用户输入的信息提交到处理业务的方法中-->
     <input type="text" placeholder="请输入用户名" @blur="f()" v-model="user.username">{{info}}<br><!--@blur失去焦点事件,v-model双向绑定-->
     <input type="password" placeholder="请输入密码" v-model="user.password"><br>
     <input type="text" placeholder="请输入昵称" v-model="user.nickname"><br>

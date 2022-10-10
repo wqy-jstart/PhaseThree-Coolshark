@@ -1,7 +1,7 @@
 package cn.tedu.boot04.entity;
 
 /**
- * 该类封装了User对象,封装了用户注册的信息
+ * 该类封装了User对象,封装了用户注册的所有信息
  */
 public class User {
     private Integer id;
