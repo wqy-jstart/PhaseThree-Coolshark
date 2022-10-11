@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改商品</title>
+</head>
+<body>
+<div>
+    <h1>修改商品页面</h1>
+    <input type="text" v-model="product.id">
+    <input type="text" v-model="product.title">
+    <input type="text" v-model="product.price">
+    <input type="text" v-model="product.num">
+    <input type="button" value="修改商品" @click="update()"><!--事件绑定,处理修改-->
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el:"body>div",
+        data:{
+            product:{//将商品的信息封装到product对象里
+                id:'',
+                title:'',
+                price:'',
+                num:''
+            }
+        },
+        methods:{
+            update(){
+                //发出异步修改请求(post请求传入要修改的商品对象)
+                axios.post("/update",v.product).then(function (response) {
+                    alert("修改完成!");//消息提示框
+                    location.href = "/list.html";//返回列表页面
+                })
+            }
+        },
+        //通常把进入该页面立即发出请求的代码写在该方法里面
+        created:function (){
+            //发送异步请求来获取商品修改前的信息
+            //location.search得到?以及参数 (例:?id=3)
+            axios.get("/selectById"+location.search).then(function (response) {
+                //服务器响应的是一个商品对象的信息
+                v.product = response.data;
+            })
+        }
+    })
+</script>
+</body>
+</html>

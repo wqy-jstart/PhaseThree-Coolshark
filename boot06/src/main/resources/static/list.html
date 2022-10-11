@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表页面</title>
+    <style>
+        h1{
+            font-family: 新宋体;
+        }
+        table{
+            width: 600px;
+            text-align: center;
+            border: 1px solid purple;
+        }
+    </style>
+</head>
+<body background="a.jpg">
+<div align="center">
+    <h1>商品列表页面</h1>
+    <table border="1">
+        <tr><!--第一行-->
+            <th>id</th><th>商品标题</th> <!--表头-->
+            <th>商品价格</th><th>商品库存</th><th>操作</th>
+        </tr>
+        <tr v-for="p in arr"><!--第二行-->
+            <td>{{p.id}}</td><td>{{p.title}}</td>
+            <td>{{p.price}}</td><td>{{p.num}}</td>
+            <!--如果点击超链接不离开页面的话,需要将超链接跳转功能取消掉-->
+            <td>
+                <!--属性绑定,点击后跳转到修改页面,并传入要修改的商品id-->
+                <a :href="'/update.html?id='+p.id">修改商品</a>
+                <!--事件绑定,添加删除功能(废除超链接效果,充当按钮),点击调用del()删除功能并传入p.id-->
+                <a href="javascript:void(0)" @click="del(p.id)">删除</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el:"body>div",
+        data:{
+            arr:[]
+        },
+        methods:{
+            del(id){//接收要删除的商品id
+                //BOM浏览器操作boolean = confirm(message? : String)
+                if (confirm("您确认删除此商品吗?")){//弹出确认框(根据用户的选择返回true和false)
+                    //异步删除请求
+                    axios.get("/delete?id="+id).then(function (response) {//传递商品id
+                        //刷新页面
+                        location.reload();
+                    })
+                }
+            }
+        },
+        //created方法是Vue对象中内置的方法 当Vue对象初始化时会调用此方法
+        //通常情况下把进入该页面后立即发出请求的代码写在此处
+        created:function () {
+            console.log("代码执行了")//浏览器控制台输出内容
+            //发出异步获取数据请求
+            axios.get("/select").then(function (response) {
+//                                          网络传输                        axios框架
+//                                            ↓                               ↓
+//★(内部):Java返回List集合->JSON格式字符串数组->二进制->JSON格式字符串数组(多个商品数据)->JavaScript中的数组
+                v.arr=response.data;//这里得到的是一个装着多个商品数据的数组
+            })
+        }
+    })
+</script>
+</body>
+</html>
