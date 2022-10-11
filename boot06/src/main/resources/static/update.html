@@ -7,10 +7,10 @@
 <body>
 <div>
     <h1>修改商品页面</h1>
-    <input type="text" v-model="product.id">
-    <input type="text" v-model="product.title">
-    <input type="text" v-model="product.price">
-    <input type="text" v-model="product.num">
+    <input type="text" v-model="product.id" placeholder="商品id">
+    <input type="text" v-model="product.title" placeholder="商品标题">
+    <input type="text" v-model="product.price" placeholder="商品价格">
+    <input type="text" v-model="product.num" placeholder="商品库存">
     <input type="button" value="修改商品" @click="update()"><!--事件绑定,处理修改-->
 </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>

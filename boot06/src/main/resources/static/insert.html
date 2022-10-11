@@ -29,7 +29,7 @@
             //发出异步请求   [返回用户输入的数组对象给处理/insert业务的方法]
             axios.post("/insert",v.product).then(function (response) {
               alert("添加完成!")
-              location.href = "/";//显示首页
+              location.href = "/";//回到首页
             })
           }
         }
