@@ -7,11 +7,13 @@
 </head>
 <body>
 <div id="app">
+    <input type="text" placeholder="请输入发布内容:" v-model="weibo.content"><!--将输入的内容进行双向绑定到weibo对象中-->
     <!--action设置上传地址
         name设置上传参数的名称
         limit设置上传图片的数量
         -->
     <!--文件上传标签-->
+    <!--:on-success是Element组件提供的事件方法,调用后可直接接收响应过来的数据-->
     <el-upload
             action="/upload"
             name="pic"
@@ -26,9 +28,11 @@
         <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
     <hr>
-    <img :src="url" alt="">
+    <input type="button" value="发布微博" @click="insert()"><!--添加点击事件-->
 </div>
 </body>
+<!--import Axios Frame work-->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <!-- import Vue before Element -->
 <script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
 <!-- import JavaScript -->
@@ -40,22 +44,41 @@
             return {
                 dialogImageUrl: '',
                 dialogVisible: false,
-                url: ''
+                weibo:{//weibo对象里含有内容和url路径
+                    content:'',
+                    url:''
+                }
             }
         },
         methods: {
             handleRemove(file, fileList) {
                 console.log(file, fileList);
+                //当删除页面中的图片时触发该方法
+                //发送请求删除服务器中的图片
+                //file代表当前删除的图片文件
+                axios.get("/remove?url="+file.response).then(function () {
+                    console.log("删除服务器图片完成!")
+                })
             },
             handlePictureCardPreview(file) {
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;
             },
-            handleSuccess(response, file, fileList) {
+            handleSuccess(response, file, fileList) {//调用后可直接接收响应过来的数据
                 //response代表服务器上传成功时响应的数据,此处的response和Axios框架发出请求的到的response不同,类似于response.data
                 //file代表当前上传成功的文件
                 //fileList代表上传成功的所有文件(是一个数组)
-                v.url = response;
+                v.weibo.url = response;//将响应的"唯一文件名图片路径"添加到weibo对象中
+            },
+            insert(){//点击按钮触发该方法,使用异步post请求来请求数据数据
+                if (v.weibo.url==""){//如果图片路径为空(未上传图片)
+                    alert("请选择上传的图片!");//提示上传图片
+                    return;
+                }
+                axios.post("/insert",v.weibo).then(function (response){
+                    alert("发布完成!");//弹出提示框
+                    location.href="/";//回到首页
+                })
             }
         }
     })

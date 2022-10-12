@@ -6,6 +6,47 @@
 </head>
 <body>
 <h1>文件上传测试</h1>
-<a href="/upload.html">上传页面</a>
+<a href="/upload.html">上传微博</a>
+<div>
+    <h2>微博列表:</h2>
+    <hr>
+    <div v-for="weibo in arr"><!--遍历arr数组-->
+        <h3>{{weibo.content}}</h3>
+        <p>{{weibo.created}}</p>
+        <img :src="weibo.url" width="100px" alt="">
+        <a href="javascript:void(0)" @click="del(weibo.id)">删除</a>
+        <hr>
+    </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el:"body>div",
+        data:{
+            arr:[]
+        },
+        methods:{
+            del(id){
+                if (confirm("您确认要删除该记录吗?")){
+                    axios.get("/delete?id="+id).then(function (response) {
+                        location.reload();//刷新页面
+                    })
+                }
+            }
+        },
+        //created方法是Vue对象中内置的方法 当Vue对象初始化时会调用此方法
+        //通常情况下把进入页面后立即发出请求的代码写在此处
+        created:function (){
+            //发送异步get请求获取所有weibo信息
+            axios.get("/select").then(function (response) {
+//                                         网络传输                         axios框架
+//                                            ↓                               ↓
+//★(内部):Java返回List集合->JSON格式字符串数组->二进制->JSON格式字符串数组(多个商品数据)->JavaScript中的数组
+                v.arr = response.data;//将接收到的微博所有数据赋到arr对象数组中
+            })
+        }
+    })
+</script>
 </body>
 </html>

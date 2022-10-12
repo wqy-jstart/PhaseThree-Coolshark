@@ -39,4 +39,17 @@ public class UploadController {
         //最后把图片的url路径响应给客户端  /文件名(http://localHost:8080/文件名)
         return "/" + fileName;//这里的文件名是唯一文件名
     }
+
+    /**
+     *处理Element组件上传图片后的删除功能
+     * @param url 图片的唯一路径
+     */
+    @RequestMapping("/remove")
+    public void remove(String url){
+        if(new File("G:/files"+url).delete()){//File对象的delete()方法,返回值boolean
+            System.out.println("删除成功!");
+        }else {
+            System.out.println("删除失败!");
+        }
+    }
 }

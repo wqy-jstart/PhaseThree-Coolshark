@@ -61,7 +61,7 @@
             console.log("代码执行了")//浏览器控制台输出内容
             //发出异步获取数据请求
             axios.get("/select").then(function (response) {
-//                                          网络传输                        axios框架
+//                                         网络传输                         axios框架
 //                                            ↓                               ↓
 //★(内部):Java返回List集合->JSON格式字符串数组->二进制->JSON格式字符串数组(多个商品数据)->JavaScript中的数组
                 v.arr=response.data;//这里得到的是一个装着多个商品数据的数组

@@ -9,7 +9,7 @@
 - #### MySQL Driver
 
 # 延伸阅读
-##MyBatis版本的商品管理系统(前后端不分离)
+## MyBatis版本的商品管理系统(前后端不分离)
 
 ### 1.使用SpringMVC和MyBatis框架完成商品的"增删改查"四种操作
 
