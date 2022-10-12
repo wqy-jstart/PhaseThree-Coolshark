@@ -29,7 +29,7 @@
         methods:{
             update(){
                 //发出异步修改请求(post请求传入要修改的商品对象)
-                axios.post("/update",v.product).then(function (response) {
+                axios.post("/update",v.product).then(function (response) {//不需服务器响应可以把response去掉
                     alert("修改完成!");//消息提示框
                     location.href = "/list.html";//返回列表页面
                 })
@@ -38,7 +38,7 @@
         //通常把进入该页面立即发出请求的代码写在该方法里面
         created:function (){
             //发送异步请求来获取商品修改前的信息
-            //location.search得到?以及参数 (例:?id=3)
+            //location.search得到?以及参数 (例:?id=3)----地址栏中的信息
             axios.get("/selectById"+location.search).then(function (response) {
                 //服务器响应的是一个商品对象的信息
                 v.product = response.data;
