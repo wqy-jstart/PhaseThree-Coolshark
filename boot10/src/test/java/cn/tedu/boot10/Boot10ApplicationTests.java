@@ -16,5 +16,4 @@ class Boot10ApplicationTests {
     void contextLoads() {
         System.out.println(mapper.selectById(1));
     }
-
 }
