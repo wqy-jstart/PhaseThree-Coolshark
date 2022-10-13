@@ -36,7 +36,7 @@ class Boot09ApplicationTests {
         System.out.println("添加了"+num+"位员工");
     }
 
-    //删除数据
+    //删除一条指定id下的数据
     @Test
     void t2(){
         mapper.deleteById1(7);
@@ -53,7 +53,7 @@ class Boot09ApplicationTests {
         System.out.println("删除了"+num+"位员工");
     }
 
-    //动态修改数据
+    //动态修改数据(根据表名进行修改)
     @Test
     void t4(){
         Emp e = new Emp();

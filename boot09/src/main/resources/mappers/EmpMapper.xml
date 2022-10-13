@@ -38,7 +38,7 @@
         )
     </delete>
 
-    <!--动态修改员工数据-->
+    <!--动态修改员工数据    <set>标签也可实现SET功能  动态实现时不要忘记在字段后添加","-->
     <update id="dynamicUpdate">
         UPDATE emp
         <set>
@@ -57,7 +57,7 @@
         WHERE id = #{id}
     </select>
 
-    <!--结果的映射   当属性值与字段名不同时使用该标签进行对应-->
+    <!--结果的映射   当属性值与字段名不同时使用该标签进行对应(前面column为表中的字段名,后面property为对象中的属性名对象)-->
     <resultMap id="empRM" type="cn.tedu.boot09.entity.Emp">
         <result column="manager_id" property="managerId"></result>
     </resultMap>
