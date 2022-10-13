@@ -12,21 +12,21 @@
 
 ### 实现Mybatis框架在XML配置文件中书写SQL语句的用法
 
-- ##### 之前SQL语句是写在Mapper接口中的注解里面
+- #### 之前SQL语句是写在Mapper接口中的注解里面
 
-  - 如果SQL语句太长 存在字符串折行拼接问题 不够直观
+  - ##### 如果SQL语句太长 存在字符串折行拼接问题 不够直观
 
-  - 一些关联查询的操作不易复用
+  - ##### 一些关联查询的操作不易复用
 
-  - 对于DBA(数据库管理员)更友好,不需要去Java代码中改SQL语句而是从配置文件中进行修改
+  - ##### 对于DBA(数据库管理员)更友好,不需要去Java代码中改SQL语句而是从配置文件中进行修改
 
 #### 步骤:
 
-- ##### 在application.properties里面添加链接数据库的信息
+- #### 在application.properties里面添加链接数据库的信息
 
-- ##### 创建Mybatis配置类, 通过MapperScan注解 取代每个Mapper接口类中的@Mapper注解
+- #### 创建Mybatis配置类, 通过MapperScan注解 取代每个Mapper接口类中的@Mapper注解
 
-  - 在工程跟目录下创建config包,在包下面创建Mybatis配置类 MybatisConfig.java
+  - ##### 在工程跟目录下创建config包,在包下面创建Mybatis配置类 MybatisConfig.java
 
     ```java
     package cn.tedu.boot08.config;
@@ -40,7 +40,7 @@
     }
     ```
 
-  - 创建entity.Product实体类和mapper.ProductMapper
+  - ##### 创建entity.Product实体类和mapper.ProductMapper
 
     ```java
     package cn.tedu.boot08.mapper;
@@ -54,21 +54,126 @@
     }
     ```
 
-  - 添加Mybatis框架mapper的映射文件到**resources目录(存放资源的目录)**存放在mappers目录里面
+- #### ★添加Mybatis框架mapper的映射XML文件到**resources目录**(存放资源的目录)存放在mappers目录里面
 
-    - 在XML配置文件里<mapper>标签的namespace中传入对象的mapper接口path路径
+- #### 之后会在mapper的XML文件中进行数据库的"增删改查"等一系列操作.
 
-    - 在<insert/delete/delect,update...标签中的id传入对应的方法名,最后书写SQL语句.
+  在XML配置文件里<mapper>标签的**namespace属性中传入操作对象对应mapper接口的path路径**,以此来处理该对象与数据库之间的关联操作
+
+  - 在<insert/delete/select,update...标签中的id传入对应的方法名,最后书写SQL语句这些操作**标签都在mapper标签中**.
+
+    ```xml
+    <mapper namespace="cn.tedu.boot08.mapper.ProductMapper">
+        <!--1.插入标签-->
+        <insert id="insert">
+            INSERT INTO product
+            VALUES (NULL, #{title}, #{price}, #{num})
+        </insert>
+        <!--2.删除标签-->
+        <delete id="deleteById">
+            DELETE
+            FROM product
+            WHERE id = #{id}
+        </delete>
+        <!--3.修改标签-->
+        <update id="update">
+            UPDATE product
+            SET title=#{title},
+                price=#{price},
+                num=#{num}
+            WHERE id = #{id}
+        </update>
+        <!--4.查询标签(Count(*)查数量)  resultType设置返回的基本类型int-->
+        <select id="count" resultType="int">
+            SELECT count(*)
+            FROM product
+        </select>
+    </mapper>
+    ```
+
+  - - 查询时需要返回值返回查到的数据,在<select id="方法名" resultType属性中传入返回的类型,基本类型可直接写,但引用类型需写入该引用对象的path路径,(可选择java类右键->Copy Path...->Copy Reference复制)获得.
 
       ```xml
-      <mapper namespace="cn.tedu.boot08.mapper.ProductMapper">
-      
-          <insert id="insert">
-              INSERT INTO product VALUES(
-                                         NULL,#{title},#{price},#{num}
-                                        )
-          </insert>
-      </mapper>
+      <!--查询标签(查所有)     resultType设置结果返回的类型(此处为引用类型,需添加对象的path)-->
+      <select id="select" resultType="cn.tedu.boot08.entity.Product">
+          SELECT id, title, price, num
+          FROM product
+      </select>
       ```
 
-      
+- ### ★动态SQL语句
+
+  ##### 动态根据传过来的参数类型(普通元素集合,对象集合,普通元素数组,任意数量的类型(Integer...))来进行批量操作
+
+#### 需要用到的标签:
+
+1. ##### foreach循环遍历标签.
+
+2. ##### collection的值如果是List集合则写list,如果不是List集合则写array.
+
+3. ##### item代表遍历的集合中变量.
+
+4. ##### separator代表分隔符.
+
+- #### 批量删除(根据传入的多个商品id进行批量删除操作):
+
+  ##### 1.通过List集合传入商品id
+
+  向集合中调用add()方法添加需要删除的商品id,调用deleteByIds1()方法,可接收返回值(返回删除的商品数量)
+
+  - ```java
+    int deleteByIds1(List<Integer> ids); //传List集合
+    ```
+
+    ```xml
+    <!--★此处foreach遍历的是List<Integer>集合中的元素-->
+        <delete id="deleteByIds1">
+            DELETE FROM product
+            WHERE id IN(
+            <foreach collection="list" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </delete>
+    ```
+
+  ##### 2.通过Integer[]数组传入商品id:
+
+  定义数组的同时,传入若干需要删除的商品id,调用deleteById2()方法,可接收返回值(返回删除的商品数量)
+
+  - ```java
+    int deleteByIds2(Integer[] ids); //传Integer数组
+    ```
+
+    ```xml
+    <!--★此处foreach遍历的是Integer[]数组中的元素-->
+        <delete id="deleteByIds2">
+            DELETE FROM product
+            WHERE id IN(
+            <foreach collection="array" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </delete>
+    ```
+
+  ##### 3.通过Integer...任意数量Integer类型传入商品id
+
+  直接在调用deleteById3()方法的同时,传入若干需要删除的商品id,可接收返回值(返回删除的商品数量)
+
+  - ```java
+    int deleteByIds3(Integer... ids); //传任意数量的Integer
+    ```
+
+  ```xml
+  <delete id="deleteByIds3">
+          DELETE FROM product
+          WHERE id IN(
+          <foreach collection="array" item="id" separator=",">
+              #{id}
+          </foreach>
+          )
+      </delete>
+  ```
+
+- #### 批量插入(根据传入的List集合,包含多个商品对象,进行批量插入操作):

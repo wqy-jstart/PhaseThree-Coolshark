@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.boot09.mapper.EmpMapper"><!--此处需要填该项目mapper接口的path路径-->
+    <!--插入数据-->
+    <insert id="insert">
+        INSERT INTO emp
+        VALUES (NULL, #{name}, #{salary}, #{job}, #{managerId})
+    </insert>
+
+    <!--批量插入-->
+    <insert id="insert1">
+        INSERT INTO emp
+        VALUES
+        <foreach collection="list" item="p" separator=",">
+            (
+            null,#{p.name},#{p.salary},#{p.job},#{p.managerId}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除数据-->
+    <delete id="deleteById1">
+        DELETE
+        FROM emp
+        WHERE id = #{id}
+    </delete>
+
+    <!--批量删除数据-->
+    <delete id="deleteById2">
+        DELETE
+        FROM emp
+        WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!--动态修改员工数据-->
+    <update id="dynamicUpdate">
+        UPDATE emp
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="salary!=null">salary=#{salary},</if>
+            <if test="job!=null">job=#{job},</if>
+            <if test="managerId!=null">managerId=#{managerId}</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!--单个查询-->
+    <select id="selectById1" resultMap="empRM">
+        SELECT id, name, salary, job, manager_id
+        FROM emp
+        WHERE id = #{id}
+    </select>
+
+    <!--结果的映射   当属性值与字段名不同时使用该标签进行对应-->
+    <resultMap id="empRM" type="cn.tedu.boot09.entity.Emp">
+        <result column="manager_id" property="managerId"></result>
+    </resultMap>
+
+    <!--查询所有-->
+    <select id="selectById2" resultMap="empRM">
+        SELECT id, name, salary, job, manager_id
+        FROM emp
+    </select>
+
+    <!--查询员工数量-->
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+        FROM emp
+    </select>
+</mapper>

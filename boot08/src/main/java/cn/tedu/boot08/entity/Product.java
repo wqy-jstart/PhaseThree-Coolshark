@@ -9,6 +9,17 @@ public class Product {
     private Double price;
     private Integer num;
 
+    public Product(){
+
+    }
+
+    public Product(Integer id, String title, Double price, Integer num) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.num = num;
+    }
+
     @Override
     public String toString() {
         return "Product{" +

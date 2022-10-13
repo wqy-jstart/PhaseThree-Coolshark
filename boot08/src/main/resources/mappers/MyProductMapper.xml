@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.boot08.mapper.MyProductMapper">
+    <!--插入标签-->
+    <insert id="insert">
+        INSERT INTO my_product
+        VALUES (NULL, #{title}, #{saleCount}, #{viewCount})
+    </insert>
+
+    <!--查询标签(查一条数据)-->
+    <select id="selectById" resultMap="productRM">
+        <include refid="query"></include>
+        WHERE id = #{id}
+    </select>
+
+    <!--结果的映射   当属性值与字段名不同时使用该标签进行对应-->
+    <resultMap id="productRM" type="cn.tedu.boot08.entity.MyProduct">
+        <!--指定一下属性值与字段名之间的对应关系-->
+        <result column="sale_count" property="saleCount"></result>
+        <result column="view_count" property="viewCount"></result>
+    </resultMap>
+
+    <!--查询标签(查询所有)-->
+    <select id="select" resultMap="productRM">
+        <include refid="query"></include>
+    </select>
+
+    <!--定义复用的SQL语句-->
+    <sql id="query">
+        SELECT id, title, sale_Count, view_Count
+        FROM my_product
+    </sql>
+</mapper>
