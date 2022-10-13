@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 @SpringBootTest
 class Boot09ApplicationTests {
+
     @Autowired(required = false)
     EmpMapper mapper;
 
