@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.tedu.boot10.mapper.PlayerMapper">
+<mapper namespace="cn.tedu.boot10.mapper.PlayerMapper"><!--指定要操作的mapper对象-->
     <!--根据要查询的球员id来查询该球员的所有信息以及其团队信息-->
     <select id="selectById" resultMap="playerRM">
         SELECT p.id pid, p.name pname, t.id tid, t.name tname,loc
@@ -15,12 +15,14 @@
     <!--结果的映射  对象的属性名和表中不一致时采取人工映射
     column是表中的字段名 property是对象中的属性名
     ★这里要将不同的名字与要查询的对象属性名称进行映射
-    id为表中的主键值且自增 使用<id>标签来进行映射-->
+    id为表中的主键值故使用<id>标签来进行映射
+    ★指定要封装的对象path路径-->
     <resultMap id="playerRM" type="cn.tedu.boot10.pojo.vo.PlayerVO">
         <id column="pid" property="id"></id>
         <result column="pname" property="name"></result>
 
-        <!--关联team并传入该表的path完全路径,并将表中与该Team对象的属性名不同的进行人工映射操作-->
+        <!--关联team并传入该表的path完全路径,并将表中与该Team对象的属性名不同的进行人工映射操作
+        association标签用于关联对象-->
         <association property="team" javaType="cn.tedu.boot10.pojo.entity.Team">
             <id column="tid" property="id"></id>
             <result column="tname" property="name"></result>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.tedu.boot08.mapper.ProductMapper">
+<mapper namespace="cn.tedu.boot08.mapper.ProductMapper"><!--指定要操作的mapper对象-->
     <!--1.插入标签-->
     <insert id="insert">
         INSERT INTO product

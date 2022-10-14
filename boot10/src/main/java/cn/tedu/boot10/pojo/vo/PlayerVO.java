@@ -3,7 +3,7 @@ package cn.tedu.boot10.pojo.vo;
 import cn.tedu.boot10.pojo.entity.Team;
 
 /**
- * 该类用于接收球员的信息
+ * 该类用于接收球员的信息(将查询的球员信息封装到VO里)
  */
 public class PlayerVO {
     private Integer id;

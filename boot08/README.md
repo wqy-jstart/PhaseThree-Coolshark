@@ -179,3 +179,20 @@
 - #### 批量插入(根据传入的List集合,包含多个商品对象,进行批量插入操作):
 
   ##### 向List集合中添加add()要插入的商品对象,每一个对象利用全参构造器,为属性赋值
+  
+  - int insertProducts(List<Product> list);
+
+```xml
+<insert id="insertProducts">
+        INSERT INTO product
+        VALUES
+        <!--遍历插入的集合中对象的属性-->
+        <foreach collection="list" item="p" separator=",">
+            (
+            NULL,#{p.title},#{p.price},#{p.num}
+            )
+        </foreach>
+    </insert>
+```
+
+- #### 动态插入

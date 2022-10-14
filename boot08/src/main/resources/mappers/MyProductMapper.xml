@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.tedu.boot08.mapper.MyProductMapper">
+<mapper namespace="cn.tedu.boot08.mapper.MyProductMapper"><!--指定要操作的mapper对象-->
     <!--插入标签-->
     <insert id="insert">
         INSERT INTO my_product
         VALUES (NULL, #{title}, #{saleCount}, #{viewCount})
     </insert>
 
-    <!--查询标签(查一条数据)-->
+    <!--查询标签(查一条数据)   这里就不用指定返回值类型,在结果映射中已经指定了类型-->
     <select id="selectById" resultMap="productRM">
         <include refid="query"></include>
         WHERE id = #{id}

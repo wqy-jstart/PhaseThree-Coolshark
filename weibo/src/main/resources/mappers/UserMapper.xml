@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.weibo.mapper.UserMapper">
+    <!--向user表中插入用户注册的信息-->
+    <insert id="insert">
+        INSERT INTO user
+        VALUES (NULL, #{username}, #{password}, #{nickname})
+    </insert>
+
+    <!--根据用户名查询user表中的信息,并封装到UserVO对象中-->
+    <select id="selectByUsername" resultType="cn.tedu.weibo.pojo.vo.UserVO">
+        SELECT id, password, nickname
+        FROM user
+        WHERE username = #{username};
+    </select>
+
+</mapper>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页面</title>
+</head>
+<body>
+<h1>微博详情页面</h1>
+<div>
+    <h2>
+        {{weibo.nickname}}:{{weibo.content}}
+    </h2>
+    <img :src="weibo.url" width="200px" alt="">
+    <hr>
+    <h1>评论相关</h1>
+    <input type="text" placeholder="评论内容..." v-model="comment.content">
+    <input type="button" value="发表评论" @click="send()">
+    <hr>
+    <h3>评论记录</h3>
+    <h3 v-for="c in commentArr">
+        {{c.userId}}评论了:{{c.content}}:{{c.weiboId}}
+    </h3>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: {
+            weibo: {},
+            comment: {
+                content: "",
+                weiboId: ""
+            },
+            commentArr: []
+        },
+        methods: {
+            send() {
+                //把用户评论的信息传到服务端
+                axios.post("/comment/insert"+location.search, v.comment).then(function (response) {
+                    if (response.data == 1) {
+                        alert("评论完成!")
+                        location.reload();//刷新页面
+                    } else {
+                        alert("请先登录!")
+                        location.href = "/login.html";
+                    }
+                })
+            }
+        },
+        //进入页面时需要请求数据并呈现
+        created: function () {
+            //通过地址栏中的id发请求获取微博详情
+            axios.get("/weibo/selectById" + location.search).then(function (response) {
+                v.weibo = response.data;
+            })
+            //通过id请求获取评论详情
+            axios.get("/comment/select"+location.search).then(function (response) {
+                v.commentArr = response.data;
+            })
+        },
+    })
+</script>
+</body>
+</html>

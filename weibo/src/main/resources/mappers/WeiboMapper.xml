@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.weibo.mapper.WeiboMapper">
+
+    <!--插入用户发布的weibo信息-->
+    <insert id="insert">
+        INSERT INTO weibo
+        VALUES (NULL, #{content}, #{url}, #{created}, #{userId})
+    </insert>
+
+    <!--关联查询WeiboListVO中的所有信息-->
+    <select id="select" resultType="cn.tedu.weibo.pojo.vo.WeiboListVO">
+        SELECT w.id id, content, nickname, created
+        FROM weibo w
+                 JOIN user u
+                      ON w.user_id = u.id
+    </select>
+
+    <!--利用微博id查询该微博的信息-->
+    <select id="selectById" resultType="cn.tedu.weibo.pojo.vo.WeiboDetailVO">
+        SELECT w.id id, content, nickname, created, url
+        FROM weibo w
+                 JOIN user u
+                      ON w.user_id = u.id
+        WHERE w.id = #{id}
+    </select>
+</mapper>

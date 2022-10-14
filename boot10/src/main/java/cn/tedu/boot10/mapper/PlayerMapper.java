@@ -2,7 +2,7 @@ package cn.tedu.boot10.mapper;
 
 import cn.tedu.boot10.pojo.vo.PlayerVO;
 
-//该接口处理有关运动员的业务方法
+//该接口处理有关球员的业务方法
 public interface PlayerMapper {
 
     /**

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.boot10.mapper.TeamMapper"><!--指定要操作的mapper对象-->
+    <select id="selectById" resultMap="deptRM">
+        SELECT t.id tid, t.name tname, loc, p.id pid, p.name pname
+        FROM team t
+                 JOIN player p
+                      ON t.id = p.team_id
+        WHERE t.id = #{id}
+    </select>
+
+    <!--手动映射 将表中与要查询的TeamVO对象属性名不符合时使用-->
+    <resultMap id="deptRM" type="cn.tedu.boot10.pojo.vo.TeamVO">
+        <id column="tid" property="id"></id>
+        <result column="tname" property="name"></result>
+        <result column="loc" property="loc"></result>
+        <!--关联集合集合用collection标签-->
+        <collection property="playerList" ofType="cn.tedu.boot10.pojo.entity.Player">
+            <id column="pid" property="id"></id>
+            <result column="pname" property="name"></result>
+        </collection>
+    </resultMap>
+</mapper>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>微博首页</h1>
+<div>
+    <!--判断user.nickname有值代表登录了-->
+    <div v-if="user.nickname!=null">
+        <div>
+            <h2>欢迎{{user.nickname}}回来!</h2>
+            <a href="/send.html">发布微博</a>
+            <a href="javascript:void(0)" @click="logout()">退出登录</a>
+            <hr>
+        </div>
+        <div v-for="weibo in arr">
+            <h3>
+                <a :href="'/detail.html?id='+weibo.id">{{weibo.nickname}}:{{weibo.content}}</a><!--属性绑定,进入链接时传入微博id-->
+                <span>{{weibo.created}}</span>
+            </h3>
+            <hr>
+        </div>
+    </div>
+    <div v-else><!--没有登录时显示下面内容-->
+        <a href="/reg.html">注册</a>
+        <a href="/login.html">登录</a>
+        <hr>
+    </div>
+
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: {
+            user: {},
+            arr: []
+        },
+        methods: {
+            logout() {
+                //★在退出登录的同时需向服务器请求删除session中的user对象,故该异步get请求是必要的
+                axios.get("/logout").then(function (response) {
+                    //修改user为空值  页面会跟着发生改变
+                    v.user = {};
+                })
+            }
+        },
+        //进入页面时直接请求数据并展示到页面
+        created: function () {
+            //发送请求获取服务器session中保存的当前登录的用户对象
+            axios.get("/currentUser").then(function (response) {
+                // alert("user="+response.data);
+                v.user = response.data;//返回的为UserVO类型
+            })
+            //发请求获取所有微博信息
+            axios.get("/weibo/select").then(function (response) {
+                v.arr = response.data;
+            })
+        }
+    })
+</script>
+</body>
+</html>

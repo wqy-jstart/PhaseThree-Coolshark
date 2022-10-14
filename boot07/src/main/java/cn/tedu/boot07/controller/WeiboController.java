@@ -52,10 +52,10 @@ public class WeiboController {
         //通过微博id查询得到图片的路径
         String url = mapper.selectUrlById(id);
         if(new File("G:/files"+url).delete()){//File对象的delete()方法,返回值boolean
-            System.out.println("删除成功!");
+            System.out.println("删除成功!");//将图片从文件中删除
         }else {
             System.out.println("删除失败!");
         }
-        mapper.deleteById(id);
+        mapper.deleteById(id);//将图片从weibo表中删除
     }
 }
