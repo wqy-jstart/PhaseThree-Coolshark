@@ -5,7 +5,7 @@
 <mapper namespace="cn.tedu.boot10.mapper.PlayerMapper"><!--指定要操作的mapper对象-->
     <!--根据要查询的球员id来查询该球员的所有信息以及其团队信息-->
     <select id="selectById" resultMap="playerRM">
-        SELECT p.id pid, p.name pname, t.id tid, t.name tname,loc
+        SELECT p.id pid, p.name pname, t.id tid, t.name tname, loc
         FROM player p
                  JOIN team t
                       ON p.team_id = t.id

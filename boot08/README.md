@@ -101,9 +101,11 @@
       </select>
       ```
 
-- ### ★动态SQL语句
+- ## ★动态SQL语句
 
   ##### 动态根据传过来的参数类型(普通元素集合,对象集合,普通元素数组,任意数量的类型(Integer...))来进行批量操作
+
+### 一. 批量删除Delete(根据传入的多个商品id进行批量删除操作):
 
 #### 需要用到的标签:
 
@@ -115,58 +117,37 @@
 
 4. ##### separator代表分隔符.
 
-- #### 批量删除(根据传入的多个商品id进行批量删除操作):
+##### 1.通过List集合传入商品id
 
-  ##### 1.通过List集合传入商品id
+向集合中调用add()方法添加需要删除的商品id,调用deleteByIds1()方法,可接收返回值(返回删除的商品数量)
 
-  向集合中调用add()方法添加需要删除的商品id,调用deleteByIds1()方法,可接收返回值(返回删除的商品数量)
-
-  - ```java
-    int deleteByIds1(List<Integer> ids); //传List集合
-    ```
-
-    ```xml
-    <!--★此处foreach遍历的是List<Integer>集合中的元素-->
-        <delete id="deleteByIds1">
-            DELETE FROM product
-            WHERE id IN(
-            <foreach collection="list" item="id" separator=",">
-                #{id}
-            </foreach>
-            )
-        </delete>
-    ```
-
-  ##### 2.通过Integer[]数组传入商品id:
-
-  定义数组的同时,传入若干需要删除的商品id,调用deleteById2()方法,可接收返回值(返回删除的商品数量)
-
-  - ```java
-    int deleteByIds2(Integer[] ids); //传Integer数组
-    ```
-
-    ```xml
-    <!--★此处foreach遍历的是Integer[]数组中的元素-->
-        <delete id="deleteByIds2">
-            DELETE FROM product
-            WHERE id IN(
-            <foreach collection="array" item="id" separator=",">
-                #{id}
-            </foreach>
-            )
-        </delete>
-    ```
-
-  ##### 3.通过Integer...任意数量Integer类型传入商品id
-
-  直接在调用deleteById3()方法的同时,传入若干需要删除的商品id,可接收返回值(返回删除的商品数量)
-
-  - ```java
-    int deleteByIds3(Integer... ids); //传任意数量的Integer
-    ```
+- ```java
+  int deleteByIds1(List<Integer> ids); //传List集合
+  ```
 
   ```xml
-  <delete id="deleteByIds3">
+  <!--★此处foreach遍历的是List<Integer>集合中的元素-->
+      <delete id="deleteByIds1">
+          DELETE FROM product
+          WHERE id IN(
+          <foreach collection="list" item="id" separator=",">
+              #{id}
+          </foreach>
+          )
+      </delete>
+  ```
+
+##### 2.通过Integer[]数组传入商品id:
+
+定义数组的同时,传入若干需要删除的商品id,调用deleteById2()方法,可接收返回值(返回删除的商品数量)
+
+- ```java
+  int deleteByIds2(Integer[] ids); //传Integer数组
+  ```
+
+  ```xml
+  <!--★此处foreach遍历的是Integer[]数组中的元素-->
+      <delete id="deleteByIds2">
           DELETE FROM product
           WHERE id IN(
           <foreach collection="array" item="id" separator=",">
@@ -176,11 +157,30 @@
       </delete>
   ```
 
-- #### 批量插入(根据传入的List集合,包含多个商品对象,进行批量插入操作):
+##### 3.通过Integer...任意数量Integer类型传入商品id
 
-  ##### 向List集合中添加add()要插入的商品对象,每一个对象利用全参构造器,为属性赋值
-  
-  - int insertProducts(List<Product> list);
+直接在调用deleteById3()方法的同时,传入若干需要删除的商品id,可接收返回值(返回删除的商品数量)
+
+- ```java
+  int deleteByIds3(Integer... ids); //传任意数量的Integer
+  ```
+
+```xml
+<delete id="deleteByIds3">
+        DELETE FROM product
+        WHERE id IN(
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+```
+
+### 二. 批量插入Insert(根据传入的List集合,包含多个商品对象,进行批量插入操作):
+
+##### 向List集合中添加add()要插入的商品对象,每一个对象利用全参构造器,为属性赋值
+
+- int insertProducts(List<Product> list);
 
 ```xml
 <insert id="insertProducts">
@@ -195,4 +195,98 @@
     </insert>
 ```
 
-- #### 动态插入
+### 三. 动态插入Insert
+
+##### 在XML文件中进行DML插入操作,设定插入的字段名,根据传递的参数或对象中的参数进行插入,未进行插入的字段默认NULL值
+
+#### 需要用到的标签:
+
+1. ##### trim标签:用于去除sql中多余关键字,添加前缀等选择性插入、更新、删除或者条件查询的操作。
+
+2. ##### prefix属性用于给sql语句拼接的前缀
+
+3. ##### suffix属性用于给sql语句拼接的后缀
+
+4. ##### suffixOverrides属性用户去除sql语句后面多余的","
+
+5. ##### if标签用户在test属性中写判断条件
+
+```xml
+<insert id="dynamicInsert">
+        INSERT INTO product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title!=null">title,</if>
+            <if test="price!=null">price,</if>
+            <if test="num!=null">num</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title!=null">#{title},</if>
+            <if test="price!=null">#{price},</if>
+            <if test="num!=null">#{num}</if>
+        </trim>
+    </insert>
+```
+
+### 四. 动态修改Update
+
+##### 根据某个过滤条件来修改表中的数据,set标签会自动去掉后面多余的逗号,#{变量名}会自动用getter获取参数列表对象中的参数来对字段进行修改,未修改的字段会保留原来的值
+
+```xml
+<update id="dynamicUpdate">
+        UPDATE product
+        <set>
+            <if test="title!=null">title=#{title},</if>
+            <if test="price!=null">price=#{price},</if>
+            <if test="num!=null">num=#{num}</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+```
+
+### 五.查询的补充:
+
+- #### 查询时会遇到表中字段名与对象实例中的属性值不一致的情况,此时需要进行对查询结果"手动映射"
+
+  - ##### 映射时使用<resultMap标签进行关联,在映射中指定结果的类型(一个对象实例的Path路径)
+
+  - ##### 映射时使用<result column="表中字段" property="对象中的属性" 来实现
+
+  - ##### 映射的内容必须在其对应的表或对象中存在,否则会报错
+
+  ```xml
+  <!--查询标签(查一条数据)   这里就不用指定返回值类型,在结果映射中已经指定了类型-->
+      <select id="selectById" resultMap="productRM">
+          SELECT id, title, sale_Count, view_Count
+          FROM my_product
+          WHERE id = #{id}
+      </select>
+      <!--结果的映射   当属性值与字段名不同时使用该标签进行对应-->
+      <resultMap id="productRM" type="cn.tedu.boot08.entity.MyProduct">
+          <!--指定一下属性值与字段名之间的对应关系-->
+          <result column="sale_count" property="saleCount"></result>
+          <result column="view_count" property="viewCount"></result>
+      </resultMap>
+  ```
+
+- #### 定义需要复用的SQL语句
+
+  - ##### 使用<sql  id="query" 标签,在标签中写复用的SQL语句,例如:
+
+    ```xml
+    <!--定义复用的SQL语句-->
+        <sql id="query">
+            SELECT id, title, sale_Count, view_Count
+            FROM my_product
+        </sql>
+    ```
+
+  - ##### 使用时利用<include refid="query" 标签来引入复用的sql语句,例如:
+
+    ```xml
+    <select id="selectById" resultMap="productRM">
+            <include refid="query"></include>
+            WHERE id = #{id}
+        </select>
+    ```
+

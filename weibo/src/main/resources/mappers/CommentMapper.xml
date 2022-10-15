@@ -9,13 +9,13 @@
         VALUES (NULL, #{content}, #{weiboId}, #{userId})
     </insert>
 
-    <!--根据comment表来查询评论的信息,这里根据weibo的id进行查询,因查询结果类型为CommentVO类型,过滤条件-->
+    <!--查询comment评论表中的信息,这里根据表中的weibo_id进行查询,因字段名有异,故与CommentVO对象类型进行映射-->
     <select id="select" resultMap="commentRM">
         SELECT user_id, content
         FROM comment
         WHERE weibo_id = #{id}
     </select>
-    <!--结果的一个手动映射  ★根据指定结果类型对应的属性进行映射,以该类型的属性形式进行输出-->
+    <!--对查询结果进行手动映射  ★根据指定结果类型对应的属性进行映射,与映射对象的属性进行对应-->
     <resultMap id="commentRM" type="cn.tedu.weibo.pojo.vo.CommentVO">
         <result column="user_id" property="userId"></result>
     </resultMap>

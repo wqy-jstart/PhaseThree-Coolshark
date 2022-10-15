@@ -20,6 +20,12 @@
         </foreach>
     </insert>
 
+    <!--修改员工信息-->
+    <update id="update">
+        UPDATE emp SET name=#{name}, salary=#{salary}, job=#{job}, manager_id=#{managerId}
+            WHERE id=#{id}
+    </update>
+
     <!--删除数据-->
     <delete id="deleteById1">
         DELETE

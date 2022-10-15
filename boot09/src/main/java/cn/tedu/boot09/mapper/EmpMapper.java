@@ -20,6 +20,13 @@ public interface EmpMapper {
     int insert1(List<Emp> e);
 
     /**
+     * 修改员工信息
+     * @param emp 将要修改的信息传到对象中
+     * @return 返回修改的条数
+     */
+    int update(Emp emp);
+
+    /**
      * 根据id删除一位员工信息
      * @param id 员工id
      */

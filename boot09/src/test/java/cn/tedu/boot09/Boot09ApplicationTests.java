@@ -36,6 +36,18 @@ class Boot09ApplicationTests {
         System.out.println("添加了"+num+"位员工");
     }
 
+    //修改员工信息
+    @Test
+    void tt(){
+        Emp e = new Emp();
+        e.setId(1);
+        e.setName("武清源");
+        e.setSalary(12000.0);
+        e.setJob("程序员");
+        e.setManagerId(2);
+        System.out.println(mapper.update(e));
+    }
+
     //删除一条指定id下的数据
     @Test
     void t2(){
