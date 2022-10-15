@@ -34,7 +34,7 @@ public class WeiboController {
         if(user==null){
             return 2;
         }
-        System.out.println("weibo = "+weibo);
+
         //创建微博实体类,并且把DTO里面的数据装进实体类,最终插到数据库里
         Weibo w = new Weibo();
         BeanUtils.copyProperties(weibo,w);//将weibo复制到w中
