@@ -31,8 +31,9 @@ public class CommentController {
         Comment c = new Comment();
         BeanUtils.copyProperties(comment,c);//将comment复制到对象c中
         //设置用户的id
-        c.setWeiboId(id);//获取该微博的id,赋到weiboId属性中
         c.setUserId(user.getId());
+        //获取该微博的id,赋到weiboId属性中
+        c.setWeiboId(id);
         //调用mapper的insert()方法
         mapper.insert(c);
         return 1;
@@ -40,7 +41,6 @@ public class CommentController {
 
     @RequestMapping("/comment/select")
     public List<CommentVO> select(int id){
-        System.out.println(mapper.select(id));
         return mapper.select(id);
     }
 }

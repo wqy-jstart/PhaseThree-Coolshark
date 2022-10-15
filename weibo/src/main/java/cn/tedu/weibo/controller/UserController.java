@@ -19,13 +19,13 @@ public class UserController {
     /**
      * 处理用户注册功能
      *
-     * @param user 传入用户post异步请求时发送的UserDTO对象
+     * @param user 接收用户post异步请求时发送的UserDTO对象
      * @return 返回int值(1 : 注册成功 2 : 用户名已存在)
      */
     @RequestMapping("/reg")
-    public int reg(@RequestBody UserDTO user) {
+    public int reg(@RequestBody UserDTO user) {//用UserDTO实例来接收用户注册的信息
         System.out.println("user = " + user);
-        UserVO u = mapper.selectByUsername(user.getUsername());
+        UserVO u = mapper.selectByUsername(user.getUsername());//根据注册的用户名去数据库中查询是否存在
         if (u != null) {
             return 2;//用户名已存在
         }
@@ -44,7 +44,7 @@ public class UserController {
         UserVO u = mapper.selectByUsername(user.getUsername());//根据UserLoginDTO中用户登录的用户名查询UserVO里面的信息
         if (u != null) { //如果不为空说明用户名存在,然后比较密码
             if (user.getPassword().equals(u.getPassword())) {//密码一致,登录成功
-                //往Session对象中保存
+                //把通过用户名查到的对象往Session对象中保存
                 session.setAttribute("user", u);//类似Map,★这里的u为返回的UserVO对象的引用
                 return 1;//登录成功
             }
@@ -60,7 +60,7 @@ public class UserController {
      */
     @RequestMapping("/currentUser")
     public UserVO currentUser(HttpSession session) {
-        return (UserVO) session.getAttribute("user");
+        return (UserVO) session.getAttribute("user");//返回从session中获取的登录对象
     }
 
     /**

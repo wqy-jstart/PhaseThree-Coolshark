@@ -10,7 +10,7 @@
 
 # 延伸阅读
 
-## ★完成一个小型的weibo案例,将实例按照DTO/Entity/VO进行划分
+## ★完成一个小型的weibo案例,将实例对象按照DTO/Entity/VO进行划分
 
 ### 1.首先在Config中进行配置(目的是在xml中书写SQL语句)
 

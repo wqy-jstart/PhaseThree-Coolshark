@@ -27,7 +27,7 @@
                 axios.post("/login",v.user).then(function (response) {
                     if (response.data==1){
                         alert("登录成功!");
-                        location.href="/";
+                        location.href="/";//回到首页
                     }else if(response.data==2){
                         alert("用户名不已存在!")
                     }else {

@@ -9,7 +9,7 @@
         VALUES (NULL, #{username}, #{password}, #{nickname})
     </insert>
 
-    <!--根据用户名查询user表中的信息,并封装到UserVO对象中-->
+    <!--根据用户名查询user表中的信息,并封装到UserVO对象中  不要把resultType写成resultMap-->
     <select id="selectByUsername" resultType="cn.tedu.weibo.pojo.vo.UserVO">
         SELECT id, password, nickname
         FROM user
