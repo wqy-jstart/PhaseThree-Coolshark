@@ -246,13 +246,13 @@
         methods: {
             //修改分类
             categoryUpdate(category) {//接收修改的category对象
-                let name = prompt("请输入新的分类名称");
+                let name = prompt("请输入新的分类名称");//先利用文本框获取输入的分类名称
                 if (name == null) {
                     v.$message.error("分类名称不能为空");
                     return;
                 }
-                let c = {id: category.id, name: name};//★创建新对象,前者为category对象的下标,后者为修改后的名字
-                //发送异步post请求,传入临时拟定修改后的对象c
+                let c = {id: category.id, name: name};//★创建新对象c,前者为category对象的下标,后者为输入框要修改的名字
+                //发送异步post请求,传入临时拟定的对象c(包含了修改的内容)
                 axios.post("/category/update", c).then(function () {//传入修改后的对象c
                     category.name = name;//将修改后的名字赋值给category对象(该对象是categoryArr[]数组中的)
                 })
@@ -262,12 +262,13 @@
                 //发送异步get请求删除分类
                 axios.get("/category/delete?id=" + category.id).then(function (response) {
                     //删除数组中的元素   (删除位置,删除数量)
-                    v.categoryArr.splice(index, 1);//直接
+                    v.categoryArr.splice(index, 1);//直接利用location.reload()方法刷新页面,整个页面所有的内容都要重新请求一遍
                 })
             },
             //删除轮播图
             bannerDelete(index, banner) {//传递一个对象和下标
                 axios.get("/banner/delete?id="+banner.id).then(function (response) {
+                    //删除数组中的元素   (删除位置,删除数量)
                     v.bannerArr.splice(index, 1);
                 })
             },
@@ -299,14 +300,15 @@
             }
         },
         created: function () {
-            //发请求获取分类信息(重用CategoryController中的方法)
+            //发请求获取所有商品分类信息(重用CategoryController中的方法)
             axios.get("/category/select").then(function (response) {
                 v.categoryArr = response.data;
             })
-            //发送请求获取轮播图数据
+            //发送请求获取所有轮播图数据
             axios.get("/banner/select").then(function (response) {
                 v.bannerArr = response.data;
             })
+            //发送请求获取所有商品的数据
         }
     })
 </script>

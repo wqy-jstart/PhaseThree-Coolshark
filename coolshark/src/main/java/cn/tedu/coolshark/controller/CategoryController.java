@@ -37,13 +37,17 @@ public class CategoryController {
      * @return 返回查询的List分类信息的集合
      */
     @RequestMapping("/category/insert")
-    public List<Category> insert(String name){
-        mapper.insert(name);//插入信息
-        return mapper.select();//查询信息
+    public List<Category> insert(String name){//接收JS文本框输入的商品name
+        mapper.insert(name);//向数据库中插入文本框中输入的商品name
+        return mapper.select();//直接向数据库中查询所有信息(达到一个插入后刷新的效果)
     }
 
+    /**
+     * 修改商品分类信息
+     * @param category 接收修改后的商品信息(id,name)
+     */
     @RequestMapping("/category/update")
-    public void update(@RequestBody Category category){//接收传过来修改后的对象
-        mapper.update(category);
+    public void update(@RequestBody Category category){//用Category对象来接收传过来修改后的对象c
+        mapper.update(category);//传入category对象,执行数据库的修改操作
     }
 }

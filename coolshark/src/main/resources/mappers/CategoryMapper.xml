@@ -22,7 +22,7 @@
         VALUES (NULL, #{name})
     </insert>
 
-    <!--修改分类中的信息,以修改的category对象id为条件,接收修改后的name名字进行修改-->
+    <!--修改分类中的信息,以修改的category对象id为条件,接收修改后的名字对name进行修改-->
     <update id="update">
         UPDATE category
         SET name=#{name}

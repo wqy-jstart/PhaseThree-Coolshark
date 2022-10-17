@@ -22,7 +22,7 @@ public interface BannerMapper {
     void delete(int id);
 
     /**
-     * 执行插入轮播图图片功能
+     * 执行添加插入轮播图图片的功能
      */
     void insert(String url);
 }

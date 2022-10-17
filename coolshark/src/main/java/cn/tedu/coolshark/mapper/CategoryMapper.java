@@ -25,7 +25,7 @@ public interface CategoryMapper {
 
     /**
      * 接收修改后的信息,进行执行修改
-     * @param category 修改后的对象信息
+     * @param category 接收修改后的商品分类信息
      */
     void update(Category category);
 }

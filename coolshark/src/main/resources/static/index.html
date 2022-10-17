@@ -37,7 +37,7 @@
                     background-color="#82c8ec"
                     text-color="#fff"
                     active-text-color="#fff">
-                    <!--v-for循环遍历List中的所有查询对象-->
+                    <!--v-for循环遍历List中的所有查询分类信息对象-->
                 <el-menu-item  v-for="c in categoryArr" :index="c.id">{{c.name}}</el-menu-item><!--下标代表当前菜单-->
                     <div style="float: right;position: relative;top: 10px"><!--相对+浮动定位(往右浮动)-->
                         <el-input placeholder="请输入搜索内容" v-model="wd">
@@ -154,10 +154,11 @@
        },
        //该方法可在打开页面后直接请求数据,页面进行显示
        created:function () {
+            //发送请求获取所有分类信息对象
            axios.get("/category/select").then(function (response) {
                v.categoryArr = response.data;
            })
-           //发请求获取所有轮播图信息
+           //发请求获取所有轮播图信息对象
            axios.get("/banner/select").then(function (response) {
                v.bannerArr = response.data;
            })
