@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="boot011" />
+        <module name="coolshark" />
         <module name="boot071" />
         <module name="JSD2207-03" />
         <module name="boot09" />

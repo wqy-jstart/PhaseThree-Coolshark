@@ -10,13 +10,16 @@
     </insert>
 
     <!--查询comment评论表中的信息,这里根据表中的weibo_id进行查询,因字段名有异,故与CommentVO对象类型进行映射-->
-    <select id="select" resultMap="commentRM">
-        SELECT user_id, content
-        FROM comment
-        WHERE weibo_id = #{id}
+    <select id="selectByWeiboId" resultMap="commentRM">
+        SELECT c.id cid, content, nickname
+        FROM comment c
+                 JOIN user u
+                      ON c.user_id = u.id
+        WHERE c.weibo_id = #{id}
     </select>
-    <!--对查询结果进行手动映射  ★根据指定结果类型对应的属性进行映射,与映射对象的属性进行对应-->
     <resultMap id="commentRM" type="cn.tedu.weibo.pojo.vo.CommentVO">
-        <result column="user_id" property="userId"></result>
+        <id column="cid" property="id"></id>
+        <result column="content" property="content"></result>
+        <result column="nickname" property="nickname"></result>
     </resultMap>
 </mapper>

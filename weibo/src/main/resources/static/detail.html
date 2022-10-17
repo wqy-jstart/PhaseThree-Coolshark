@@ -16,9 +16,9 @@
     <input type="text" placeholder="评论内容..." v-model="comment.content">
     <input type="button" value="发表评论" @click="send()">
     <hr>
-    <h3>评论记录</h3>
+    <h1>评论记录</h1>
     <h3 v-for="c in commentArr">
-        {{c.userId}}评论了:{{c.content}}
+        {{c.nickname}}评论了:{{c.content}}
     </h3>
 </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
@@ -36,8 +36,10 @@
         },
         methods: {
             send() {
+                //将weibo表中的id赋值给comment中的weiboId
+                v.comment.weiboId = v.weibo.id;
                 //把用户评论的信息传到服务端
-                axios.post("/comment/insert"+location.search, v.comment).then(function (response) {
+                axios.post("/comment/insert", v.comment).then(function (response) {
                     if (response.data == 1) {
                         alert("评论完成!")
                         location.reload();//刷新页面
@@ -55,7 +57,7 @@
                 v.weibo = response.data;
             })
             //通过id请求获取评论详情
-            axios.get("/comment/select"+location.search).then(function (response) {
+            axios.get("/comment/selectByWeiboId"+location.search).then(function (response) {
                 v.commentArr = response.data;
             })
         },

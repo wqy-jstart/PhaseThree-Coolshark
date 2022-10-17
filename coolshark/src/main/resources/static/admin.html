@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header style="background-color: #0095d7">
+            <h1 style="color: white;font-size: 22px">
+                CoolShark商城后台管理系统
+                <span style="float: right;font-size: 15px">欢迎XXX回来
+                    <a href="">退出登录</a>
+                </span>
+            </h1>
+        </el-header>
+        <el-container>
+            <el-aside width="200px">
+                <el-menu style="height: 500px"
+                         @select="handleSelect"
+                         default-active="2"
+                         class="el-menu-vertical-demo">
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <i class="el-icon-s-flag"></i>
+                            <span>分类管理</span>
+                        </template>
+                        <el-menu-item index="1-1">分类列表</el-menu-item>
+                        <el-menu-item index="1-2">添加分类</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="2">
+                        <template slot="title">
+                            <i class="el-icon-picture"></i>
+                            <span>轮播图管理</span>
+                        </template>
+                        <el-menu-item index="2-1">轮播图列表</el-menu-item>
+                        <el-menu-item index="2-2">添加轮播图</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="3">
+                        <template slot="title">
+                            <i class="el-icon-shopping-cart-2"></i>
+                            <span>商品管理</span>
+                        </template>
+                        <el-menu-item index="3-1">商品列表</el-menu-item>
+                        <el-menu-item index="3-2">添加商品</el-menu-item>
+                    </el-submenu>
+
+                </el-menu>
+
+            </el-aside>
+            <el-main>
+                <el-table v-if="currentIndex=='1-1'"
+                          :data="categoryArr"
+                          style="width: 100%">
+                    <!--type=index 设置这一列显示的内容为编号-->
+                    <el-table-column type="index" label="编号"></el-table-column>
+                    <el-table-column
+                            prop="name"
+                            label="分类名称"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <!--scope里面装着当前行所对应的对象信息
+                        scope.$index 得到当前行对应的对象在数组中的下标
+                        scope.row 得到当前行对应的对象
+                        -->
+                        <template slot-scope="scope">
+                            <el-button size="mini" @click="categoryUpdate(scope.row)"
+                                       type="success">修改
+                            </el-button>
+                            <!--气泡确认框  @confirm=""事件,在确认之后触发-->
+                            <el-popconfirm
+                                    title="您确认删除此分类吗?"
+                                    @confirm="categoryDelete(scope.$index, scope.row)"
+                            >
+                                <el-button slot="reference" size="mini"
+                                           type="danger">删除
+                                </el-button>
+                            </el-popconfirm>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-table v-if="currentIndex=='2-1'"
+                          :data="bannerArr"
+                          style="width: 100%">
+                    <!--type=index 设置这一列显示的内容为编号-->
+                    <el-table-column
+                            type="index" label="编号">
+                    </el-table-column>
+                    <el-table-column
+                            label="轮播图"
+                            width="180">
+                        <template slot-scope="scope">
+                            <img :src="scope.row.url" width="100%">
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <!--scope里面装着当前行所对应的对象信息
+                        scope.$index 得到当前行对应的对象在数组中的下标
+                        scope.row 得到当前行对应的对象
+                        -->
+                        <template slot-scope="scope">
+                            <!--scope.row代表当前行对应数组中的对象-->
+                            <el-popconfirm
+                                    title="您确认删除此轮播图吗?"
+                                    @confirm="bannerDelete(scope.$index, scope.row)"
+                            >
+                                <el-button slot="reference" size="mini"
+                                           type="danger">删除
+                                </el-button>
+                            </el-popconfirm>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-table v-if="currentIndex=='3-1'"
+                          :data="productArr"
+                          style="width: 100%">
+                    <!--type=index 设置这一列显示的内容为编号-->
+                    <el-table-column type="index" label="编号"></el-table-column>
+                    <el-table-column prop="title" label="商品标题" width="200"></el-table-column>
+                    <el-table-column prop="price" label="价格" width="80"></el-table-column>
+                    <el-table-column prop="oldPrice" label="原价" width="80"></el-table-column>
+                    <el-table-column prop="saleCount" label="销量" width="80"></el-table-column>
+                    <el-table-column
+                            label="商品图片"
+                            width="100">
+                        <template slot-scope="scope">
+                            <!--scope.row代表当前行对应数组中的对象-->
+                            <img :src="scope.row.url" width="100%">
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <!--scope里面装着当前行所对应的对象信息
+                        scope.$index 得到当前行对应的对象在数组中的下标
+                        scope.row 得到当前行对应的对象
+                        -->
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.$index, scope.row)">删除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-main>
+        </el-container>
+    </el-container>
+</div>
+</body>
+<!--inport Axios Framework-->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<!-- import Vue before Element -->
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                currentIndex: "1-1",
+                categoryArr: [],
+                bannerArr: [],
+                productArr: [{
+                    title: "森马牛仔裤女宽松慢跑裤运动风2022春季新款显瘦束脚长裤复古",
+                    price: 233,
+                    oldPrice: 598,
+                    url: "imgs/a.jpg",
+                    saleCount: 2342
+                }, {
+                    title: "茵曼马甲连衣裙两件套春季新款娃娃领色织格长袖背心裙套装",
+                    price: 233,
+                    oldPrice: 598,
+                    url: "imgs/b.jpg",
+                    saleCount: 2342
+                },
+                    {
+                        title: "雪中飞墨绿色短袖t恤女夏2022新款纯棉半袖打底体恤夏季上衣潮ins",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/c.jpg",
+                        saleCount: 2342
+                    },
+                    {
+                        title: "【佟丽娅同款】鸭鸭明星同款羽绒服2021年冬季新款时尚连帽外套冬",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/d.jpg",
+                        saleCount: 2342
+                    },
+                    {
+                        title: "BEASTER小恶魔鬼脸明星同款夹克毛绒保暖加厚字母印花宽松外套ins",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/e.jpg",
+                        saleCount: 2342
+                    },
+                    {
+                        title: "香影毛呢外套女中长款2021年冬季新款气质韩版娃娃领紫色呢子大衣",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/f.jpg",
+                        saleCount: 2342
+                    },
+                    {title: "SEMIR森马商场同款打底针织毛衣纯色高领新品显瘦", price: 233, oldPrice: 598, url: "imgs/g.jpg", saleCount: 2342},
+                    {
+                        title: "美特斯邦威女MTEE 贺岁系列中长款风衣736598",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/h.jpg",
+                        saleCount: 2342
+                    },
+                    {
+                        title: "imone2021秋款黑色小西装外套女韩版学生宽松学院风外套jk外套",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/i.jpg",
+                        saleCount: 2342
+                    },
+                    {
+                        title: "BEASTER 小恶魔明星同款保暖长袖街头潮流连帽卫衣情侣上衣",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/j.jpg",
+                        saleCount: 2342
+                    },
+                    {
+                        title: "憨厚皇后100%绵羊皮2021秋海宁真皮皮衣女长款修身绵羊皮风衣外",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/k.jpg",
+                        saleCount: 2342
+                    },
+                    {
+                        title: "美特斯邦威高腰牛仔裤女宽松小脚新款春秋彩色潮流女士牛仔",
+                        price: 233,
+                        oldPrice: 598,
+                        url: "imgs/a.jpg",
+                        saleCount: 2342
+                    }]
+            }
+        },
+        methods: {
+            //修改分类
+            categoryUpdate(category) {//接收修改的category对象
+                let name = prompt("请输入新的分类名称");
+                if (name == null) {
+                    v.$message.error("分类名称不能为空");
+                    return;
+                }
+                let c = {id: category.id, name: name};//★创建新对象,前者为category对象的下标,后者为修改后的名字
+                //发送异步post请求,传入临时拟定修改后的对象c
+                axios.post("/category/update", c).then(function () {//传入修改后的对象c
+                    category.name = name;//将修改后的名字赋值给category对象(该对象是categoryArr[]数组中的)
+                })
+            },
+            //删除分类
+            categoryDelete(index, category) {//接收删除的下标和对象
+                //发送异步get请求删除分类
+                axios.get("/category/delete?id=" + category.id).then(function (response) {
+                    //删除数组中的元素   (删除位置,删除数量)
+                    v.categoryArr.splice(index, 1);//直接
+                })
+            },
+            //删除轮播图
+            bannerDelete(index, banner) {//传递一个对象和下标
+                axios.get("/banner/delete?id="+banner.id).then(function (response) {
+                    v.bannerArr.splice(index, 1);
+                })
+            },
+            //添加分类
+            handleSelect(key, keyPath) {//key表示要操作的位置
+                if (key == '1-2') {
+                    let name = prompt("请输入分类的名称");//prompt()弹出文本框,接收输入的数据赋给变量name
+                    //点击取消
+                    if (name==null){
+                        return;
+                    }
+                    if (name==''){
+                        v.$message.error("分类名称不能为空");
+                        return;
+                    }
+                    //发出异步get请求,并将要添加的name传递过去
+                    axios.get("/category/insert?name=" + name).then(function (response) {
+                        //添加分类后把所有的分类请求回来赋值给数组
+                        v.categoryArr = response.data;
+                    })
+                } else if (key == '2-2') {
+                    //跳转到添加轮播图页面
+                    location.href="/insertBanner.html";
+                } else if (key == '3-2') {
+                    v.$message("添加商品");
+                } else {
+                    v.currentIndex = key;
+                }
+            }
+        },
+        created: function () {
+            //发请求获取分类信息(重用CategoryController中的方法)
+            axios.get("/category/select").then(function (response) {
+                v.categoryArr = response.data;
+            })
+            //发送请求获取轮播图数据
+            axios.get("/banner/select").then(function (response) {
+                v.bannerArr = response.data;
+            })
+        }
+    })
+</script>
+</html>

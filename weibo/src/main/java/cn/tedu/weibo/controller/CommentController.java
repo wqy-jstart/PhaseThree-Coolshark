@@ -21,26 +21,24 @@ public class CommentController {
     CommentMapper mapper;
 
     @RequestMapping("/comment/insert")
-    public int insert(@RequestBody CommentDTO comment, HttpSession session,int id){
+    public int insert(@RequestBody CommentDTO comment, HttpSession session){
         //传入user判断返回session保存的对象来判断是否登录
         UserVO user = (UserVO) session.getAttribute("user");
         if (user==null){
             return 2;
         }
-        System.out.println("comment = "+comment);
+        System.out.println("comment = "+comment);//该comment中含有内容content和weiboId
         Comment c = new Comment();
         BeanUtils.copyProperties(comment,c);//将comment复制到对象c中
         //设置用户的id
         c.setUserId(user.getId());
-        //获取该微博的id,赋到weiboId属性中
-        c.setWeiboId(id);
         //调用mapper的insert()方法
         mapper.insert(c);
         return 1;
     }
 
-    @RequestMapping("/comment/select")
+    @RequestMapping("/comment/selectByWeiboId")
     public List<CommentVO> select(int id){
-        return mapper.select(id);
+        return mapper.selectByWeiboId(id);
     }
 }

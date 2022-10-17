@@ -17,5 +17,5 @@ public interface CommentMapper {
      * @param id 根据weibo的id查询该id的所有评论
      * @return 返回该weibo的所有评论
      */
-    List<CommentVO> select(int id);
+    List<CommentVO> selectByWeiboId(int id);
 }

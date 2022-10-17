@@ -1,18 +1,18 @@
-package cn.tedu.weibo.pojo.vo;
+package cn.tedu.coolshark.pojo.vo;
 
 /**
- * 该类封装了查询到评论者的信息
+ * 该实体类封装了查询到的用户有关信息
  */
-public class CommentVO {
+public class UserVo {
     private Integer id;
-    private String content;
+    private String password;
     private String nickname;
 
     @Override
     public String toString() {
-        return "CommentVO{" +
+        return "UserVo{" +
                 "id=" + id +
-                ", content='" + content + '\'' +
+                ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
                 '}';
     }
@@ -25,12 +25,12 @@ public class CommentVO {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNickname() {
