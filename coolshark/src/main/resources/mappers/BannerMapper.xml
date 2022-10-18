@@ -26,4 +26,9 @@
     <update id="update">
         UPDATE banner SET url=#{url} WHERE id=#{id}
     </update>
+
+    <!--根据商品id来查询图片的url路径-->
+    <select id="selectUrlById" resultType="string">
+        SELECT url FROM banner WHERE id=#{id}
+    </select>
 </mapper>

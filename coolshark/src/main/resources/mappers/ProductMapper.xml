@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.coolshark.mapper.ProductMapper">
+    <!--执行向SQL中添加商品-->
+    <insert id="insert">
+        INSERT INTO product
+        VALUES (NULL, #{title}, #{url}, #{price},
+                #{oldPrice}, #{saleCount}, #{num},
+                #{viewCount}, #{created}, #{categoryId})
+    </insert>
+
+    <!--执行向SQL中查询有关管理员的商品信息-->
+    <select id="selectAdmin" resultMap="productAdminRM">
+        SELECT id, title, url, price, old_price, sale_count
+        FROM product
+    </select>
+    <resultMap id="productAdminRM" type="cn.tedu.coolshark.pojo.vo.ProductAdminVO">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="url" property="url"></result>
+        <result column="price" property="price"></result>
+        <result column="old_price" property="oldPrice"></result>
+        <result column="sale_count" property="saleCount"></result>
+    </resultMap>
+
+    <!--根据商品id查找商品图片url路径-->
+    <select id="selectUrlById" resultType="string">
+        SELECT url
+        FROM product
+        WHERE id = #{id}
+    </select>
+
+    <!--根据传入的商品id向SQL中删除-->
+    <delete id="deleteById">
+        DELETE
+        FROM product
+        WHERE id = #{id}
+    </delete>
+
+    <!--向数据库查询指定id下修改前的商品信息-->
+    <select id="selectByIdUpdate" resultMap="productUpdateRM">
+        SELECT id,
+               title,
+               price,
+               old_price,
+               url,
+               sale_count,
+               num,
+               category_id
+        FROM product
+        WHERE id = #{id}
+    </select>
+    <resultMap id="productUpdateRM" type="cn.tedu.coolshark.pojo.vo.ProductUpdateVO">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="price" property="price"></result>
+        <result column="old_price" property="oldPrice"></result>
+        <result column="url" property="url"></result>
+        <result column="sale_count" property="saleCount"></result>
+        <result column="num" property="num"></result>
+        <result column="category_id" property="categoryId"></result>
+    </resultMap>
+
+    <!--向SQL中修改商品信息-->
+    <update id="update">
+        UPDATE product
+        SET title=#{title},
+            price=#{price},
+            old_price=#{oldPrice},
+            url=#{url},
+            sale_count=#{saleCount},
+            num=#{num},
+            category_id=#{categoryId}
+        WHERE id = #{id}
+    </update>
+
+    <!--向SQL中查询排行中的商品信息,并降序排列,分页(一页显示6行)-->
+    <select id="selectTop" resultMap="productRM">
+        SELECT id, title, sale_count
+        FROM product
+        ORDER BY sale_count DESC
+        LIMIT 0,6
+    </select>
+    <resultMap id="productRM" type="cn.tedu.coolshark.pojo.vo.ProductTopVO">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="sale_count" property="saleCount"></result>
+    </resultMap>
+</mapper>

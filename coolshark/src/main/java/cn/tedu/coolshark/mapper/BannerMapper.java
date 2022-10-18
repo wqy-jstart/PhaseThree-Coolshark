@@ -31,4 +31,11 @@ public interface BannerMapper {
      * @param banner 传递修改后的轮播图对象
      */
     void update(Banner banner);
+
+    /**
+     * 根据商品id查询商品的图片路径
+     * @param id 商品id
+     * @return 商品url路径
+     */
+    String selectUrlById(int id);
 }

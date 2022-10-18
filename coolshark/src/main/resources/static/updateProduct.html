@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+    <style>
+        .el-page-header__content {
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--左上角返回上一页-->
+    <el-page-header style="background-color: #0095d7; color: white;
+    line-height: 60px" @back="goBack" content="修改商品">
+    </el-page-header>
+    <el-card style="width: 600px;height: 800px;margin: 0 auto;border: 1px solid #b1b1b1;margin-top: 10px"><!--卡片-->
+        <el-form label-width="80px"> <!--Element组件中的表单-->
+            <el-form-item label="商品标题:">
+                <el-input type="text" v-model="p.title"></el-input>
+            </el-form-item>
+            <el-form-item label="商品价格:">
+                <el-input type="text" v-model="p.price"></el-input>
+            </el-form-item>
+            <el-form-item label="商品原价:">
+                <el-input type="text" v-model="p.oldPrice"></el-input>
+            </el-form-item>
+            <el-form-item label="商品销量:">
+                <el-input type="text" v-model="p.saleCount"></el-input>
+            </el-form-item>
+            <el-form-item label="商品库存:">
+                <el-input type="text" v-model="p.num"></el-input>
+            </el-form-item>
+            <el-form-item label="商品分类:"><!--用于添加到指定商品分类中-->
+                <el-select v-model="p.categoryId">
+                    <!--显示分类的下拉选,遍历categoryArr数组得到-->
+                    <el-option v-for="c in categoryArr" :label="c.name" :value="c.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="商品图片:">
+                <img :src="oldUrl" width="100px" height="100px" v-if="isShow" alt=""><!--修改前的图片,控制显示isShow-->
+                <!--当上传成功后调用handleSuccess这个方法-->
+                <el-upload
+                        action="/upload"
+                        name="pic"
+                        limit="1"
+                        list-type="picture-card"
+                        :on-success="handleSuccess"
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove">
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+                <el-dialog :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
+            </el-form-item>
+            <el-form-item>
+                <el-button style="margin: 0 0 0 20px"
+                           type="success" @click="update()">修改商品
+                </el-button>
+            </el-form-item>
+        </el-form>
+    </el-card>
+</div>
+</body>
+<!--import Axios Framework-->
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<!-- import Vue before Element -->
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                isShow:true,
+                dialogImageUrl: '',
+                dialogVisible: false,
+                p:{
+                    title:'',
+                    price:'',
+                    oldPrice:'',
+                    saleCount:'',
+                    num:'',
+                    categoryId:'',
+                    url:''
+                },
+                categoryArr:[],
+                oldUrl:''
+            }
+        },
+        methods: {
+            update() {//修改商品图片
+                if (v.p.url == '') {
+                    v.$message.error("请选择修改要上传的图片!")
+                    return;
+                }
+                //发送修改商品的请求
+                axios.post("/product/update",v.p).then(function (response) {
+                    //跳转到管理页面
+                    location.href = "/admin.html";
+                })
+            },
+            handleSuccess(response, file, fileList) {//图片上传成功后接收图片的url
+                //response代表服务器响应的图片路径
+                v.p.url = response;
+                v.isShow = false;//上传图片后不显示
+            },
+            goBack() {
+                history.back();//返回上一页面
+            },
+            handleRemove(file, fileList) {
+                v.isShow = true;//删除后设为显示
+                console.log(file, fileList);
+                //发出删除图片的请求
+                axios.get("/remove?url=" + v.p.url).then(function () {
+                    v.$message("服务器图片删除完成");
+                    v.p.url='';
+                })
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
+            }
+        },
+        //发请求获取所有商品分类信息(下拉选使用)
+        created:function (){
+            axios.get("/category/select").then(function (response) {
+                v.categoryArr = response.data;
+            })
+            //通过id请求需要修改前的商品信息   拿到抽象路径传入的商品id
+            axios.get("/product/delectById/update"+location.search).then(function (response) {
+                v.p = response.data;
+                //将第一次请求的图片url与oldUrl进行绑定,防止删除图片后原来的图片导致图裂,保证显示的一直是第一次请求的图片
+                v.oldUrl = v.p.url;
+            })
+        }
+    })
+</script>
+</html>

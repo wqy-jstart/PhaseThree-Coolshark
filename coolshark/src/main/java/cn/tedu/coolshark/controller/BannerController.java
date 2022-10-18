@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,15 @@ public class BannerController {
      */
     @RequestMapping("/delete")
     public void delete(int id){
-       mapper.delete(id);
+        //删文件
+        String url = mapper.selectUrlById(id);
+        if(new File("G:/files"+url).delete()){
+            System.out.println("删除成功!");
+        }else {
+            System.out.println("删除失败!");
+        }
+        //删数据
+       mapper.delete(id);//向数据库中删除
     }
 
     /**

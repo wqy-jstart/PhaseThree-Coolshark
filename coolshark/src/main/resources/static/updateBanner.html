@@ -17,7 +17,7 @@
     <el-page-header style="background-color: #0095d7; color: white;
     line-height: 60px" @back="goBack" content="添加轮播图">
     </el-page-header>
-    <img :src="oldUrl" v-if="isShow" width="200px" alt="">
+    <img :src="oldUrl" v-if="url==''" width="200px" alt=""><!--未上传时显示的是修改前的图片,url为空串-->
     <!--当上传成功后调用handleSuccess这个方法-->
     <el-upload
             action="/upload"
@@ -70,17 +70,19 @@
             },
             handleSuccess(response, file, fileList) {//图片上传成功后接收图片的url
                 //response代表服务器响应的图片路径
-                v.url = response;
-                v.isShow=false;//点击上传图片响应上传的路径后,以前的图片不显示
+                v.url = response;//图片上传后url为响应后的url是有值的
+                // v.isShow=false;//点击上传图片响应上传的路径后,以前的图片不显示
             },
             goBack() {
                 history.back();//返回上一页面
             },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
+                v.isShow = true;
                 //发出删除图片的请求
                 axios.get("/remove?url=" + v.url).then(function () {
                     v.$message("服务器图片删除完成");
+                    //删除后将url赋值为空串,又回到原来的状态
                     v.url='';
                 })
             },
