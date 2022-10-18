@@ -102,6 +102,9 @@
                         scope.row 得到当前行对应的对象
                         -->
                         <template slot-scope="scope">
+                            <el-button size="mini" @click="bannerUpdate(scope.row)"
+                                       type="success">修改
+                            </el-button>
                             <!--scope.row代表当前行对应数组中的对象-->
                             <el-popconfirm
                                     title="您确认删除此轮播图吗?"
@@ -265,9 +268,13 @@
                     v.categoryArr.splice(index, 1);//直接利用location.reload()方法刷新页面,整个页面所有的内容都要重新请求一遍
                 })
             },
+            //修改轮播图
+            bannerUpdate(banner) {
+                location.href="/updateBanner.html?url="+banner.url+"&id="+banner.id;
+            },
             //删除轮播图
             bannerDelete(index, banner) {//传递一个对象和下标
-                axios.get("/banner/delete?id="+banner.id).then(function (response) {
+                axios.get("/banner/delete?id=" + banner.id).then(function (response) {
                     //删除数组中的元素   (删除位置,删除数量)
                     v.bannerArr.splice(index, 1);
                 })
@@ -277,10 +284,10 @@
                 if (key == '1-2') {
                     let name = prompt("请输入分类的名称");//prompt()弹出文本框,接收输入的数据赋给变量name
                     //点击取消
-                    if (name==null){
+                    if (name == null) {
                         return;
                     }
-                    if (name==''){
+                    if (name == '') {
                         v.$message.error("分类名称不能为空");
                         return;
                     }
@@ -291,9 +298,10 @@
                     })
                 } else if (key == '2-2') {
                     //跳转到添加轮播图页面
-                    location.href="/insertBanner.html";
+                    location.href = "/insertBanner.html";
                 } else if (key == '3-2') {
-                    v.$message("添加商品");
+                    //跳转到添加商品页面
+                    location.href="/insertProduct.html"
                 } else {
                     v.currentIndex = key;
                 }

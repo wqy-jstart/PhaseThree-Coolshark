@@ -17,6 +17,7 @@
     <el-page-header style="background-color: #0095d7; color: white;
     line-height: 60px" @back="goBack" content="添加轮播图">
     </el-page-header>
+    <img :src="oldUrl" v-if="isShow" width="200px" alt="">
     <!--当上传成功后调用handleSuccess这个方法-->
     <el-upload
             action="/upload"
@@ -32,7 +33,7 @@
         <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
     <el-button style="margin: 4px 0 0 20px" slot="reference"
-               type="success" @click="insert()">添加轮播图
+               type="success" @click="update()">修改轮播图
     </el-button>
 </div>
 </body>
@@ -49,24 +50,28 @@
             return {
                 dialogImageUrl: '',
                 dialogVisible: false,
-                url: ''
+                url: '',
+                oldUrl:'',
+                isShow:true
             }
         },
         methods: {
-            insert() {//添加轮播图图片
+            update() {//添加轮播图图片
                 if (v.url == '') {
                     v.$message.error("请选择上传的图片!")
                     return;
                 }
                 //发送添加轮播图的请求
-                axios.get("/banner/insert?url=" + v.url).then(function (response) {
-                    //显示到管理页面
-                    location.href = "/admin.html";
-                })
+                let bannerId = location.search.split("&")[1].split("=")[1];//截取id
+               let b = {id:bannerId,url:v.url};//准备一个修改后的对象(包含传递的id和修改后的图片url)
+               axios.post("/banner/update",b).then(function (response) {
+                   location.href = "/admin.html";
+               })
             },
             handleSuccess(response, file, fileList) {//图片上传成功后接收图片的url
                 //response代表服务器响应的图片路径
-                v.url = response
+                v.url = response;
+                v.isShow=false;//点击上传图片响应上传的路径后,以前的图片不显示
             },
             goBack() {
                 history.back();//返回上一页面
@@ -83,6 +88,14 @@
                 this.dialogImageUrl = file.url;
                 this.dialogVisible = true;
             }
+        },
+        created:function (){
+            //created方法是Vue对象初始化过程中的方法,并没有初始化完成,此时如果需要访问Vue对象中的属性,可以通过this取代v
+            //axios请求后为什么可以使用v?因为发请求是使用的子线程,请求完成后created方法早就执行完Vue对象初始化过程也早就完成,所以可以访问v变量
+            //得到地址栏中从上个页面传递过来的图片路径(这里的this指代Vue对象)
+            // ?url=xxx.jpg&id=5
+            // ?url=xxx.jpg
+            this.oldUrl = location.search.split("&")[0].split("=")[1];
         }
     })
 </script>

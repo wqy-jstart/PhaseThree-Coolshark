@@ -25,4 +25,10 @@ public interface BannerMapper {
      * 执行添加插入轮播图图片的功能
      */
     void insert(String url);
+
+    /**
+     * 修改轮播图
+     * @param banner 传递修改后的轮播图对象
+     */
+    void update(Banner banner);
 }

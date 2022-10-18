@@ -21,4 +21,9 @@
         INSERT INTO banner
         VALUES (NULL, #{url})
     </insert>
+
+    <!--修改轮播图-->
+    <update id="update">
+        UPDATE banner SET url=#{url} WHERE id=#{id}
+    </update>
 </mapper>
