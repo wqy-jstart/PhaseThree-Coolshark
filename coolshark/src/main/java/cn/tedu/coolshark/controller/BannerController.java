@@ -3,6 +3,7 @@ package cn.tedu.coolshark.controller;
 import cn.tedu.coolshark.mapper.BannerMapper;
 import cn.tedu.coolshark.pojo.entity.Banner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/banner")//在类上写该注解可以指定提交地址的父路径
 public class BannerController {
+    @Value("${dirPath}")//该注解会将配置文件中的变量传递到当下的全局变量中
+    private String dirPath;
 
     @Autowired(required = false)
     BannerMapper mapper;
@@ -34,7 +37,7 @@ public class BannerController {
     public void delete(int id){
         //删文件
         String url = mapper.selectUrlById(id);
-        if(new File("G:/files"+url).delete()){
+        if(new File(dirPath+url).delete()){
             System.out.println("删除成功!");
         }else {
             System.out.println("删除失败!");

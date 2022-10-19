@@ -3,9 +3,7 @@ package cn.tedu.coolshark.mapper;
 import cn.tedu.coolshark.pojo.dto.ProductDTO;
 import cn.tedu.coolshark.pojo.dto.ProductUpdateDTO;
 import cn.tedu.coolshark.pojo.entity.Product;
-import cn.tedu.coolshark.pojo.vo.ProductAdminVO;
-import cn.tedu.coolshark.pojo.vo.ProductTopVO;
-import cn.tedu.coolshark.pojo.vo.ProductUpdateVO;
+import cn.tedu.coolshark.pojo.vo.*;
 
 import java.util.List;
 
@@ -53,4 +51,37 @@ public interface ProductMapper {
      * @return 返回排行榜中商品的信息VO
      */
     List<ProductTopVO> selectTop();
+
+    /**
+     * 执行查询主页所有商品信息的功能
+     * @return 返回所有商品信息VO对象的List集合
+     */
+    List<ProductIndexVO> selectIndex();
+
+    /**
+     * 执行查询商品详情的功能
+     * @param id 接收传入的商品id
+     * @return 返回该id下的商品详情信息VO对象
+     */
+    ProductDetailVO selectByIdDetail(int id);
+
+    /**
+     * 根据传入的商品id让该商品浏览量+1
+     * @param id 商品id
+     */
+    void updateViewCount(int id);
+
+    /**
+     * 查询指定分类下的商品信息
+     * @param id 分类id
+     * @return 返回首页商品信息对象的List集合
+     */
+    List<ProductIndexVO> selectByCid(int id);
+
+    /**
+     * 执行根据搜索内容到数据库中查询对应商品的结果信息
+     * @param wd 接收搜索框中搜索的内容
+     * @return 返回搜索结果的商品信息VO对象List集合
+     */
+    List<ProductIndexVO> selectByWd(String wd);
 }

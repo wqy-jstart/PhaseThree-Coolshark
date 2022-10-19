@@ -80,12 +80,72 @@
     <select id="selectTop" resultMap="productRM">
         SELECT id, title, sale_count
         FROM product
-        ORDER BY sale_count DESC
-        LIMIT 0,6
+        ORDER BY sale_count DESC LIMIT 0,6
     </select>
     <resultMap id="productRM" type="cn.tedu.coolshark.pojo.vo.ProductTopVO">
         <id column="id" property="id"></id>
         <result column="title" property="title"></result>
         <result column="sale_count" property="saleCount"></result>
     </resultMap>
+
+    <!--查询主页商品的所有IndexVO信息-->
+    <select id="selectIndex" resultMap="productIndexRM">
+        SELECT id, title, price, url, view_count, sale_count
+        FROM product
+    </select>
+    <!--手动映射-->
+    <resultMap id="productIndexRM" type="cn.tedu.coolshark.pojo.vo.ProductIndexVO">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="price" property="price"></result>
+        <result column="url" property="url"></result>
+        <result column="view_count" property="viewCount"></result>
+        <result column="sale_count" property="saleCount"></result>
+    </resultMap>
+
+    <!--根据商品id查询商品的详情信息-->
+    <select id="selectByIdDetail" resultMap="productDetailRM">
+        SELECT id,
+               title,
+               url,
+               sale_count,
+               view_count,
+               price,
+               old_price,
+               created
+        FROM product
+        WHERE id = #{id}
+    </select>
+    <!--手动映射-->
+    <resultMap id="productDetailRM" type="cn.tedu.coolshark.pojo.vo.ProductDetailVO">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="price" property="price"></result>
+        <result column="old_price" property="oldPrice"></result>
+        <result column="url" property="url"></result>
+        <result column="sale_count" property="saleCount"></result>
+        <result column="view_count" property="viewCount"></result>
+        <result column="created" property="created"></result>
+    </resultMap>
+
+    <!--根据商品id为过滤条件,向SQL中修改商品的浏览量+1-->
+    <update id="updateViewCount">
+        UPDATE product
+        SET view_count = view_count + 1
+        WHERE id = #{id}
+    </update>
+
+    <!--以分类id为条件查询该分类下的所有商品信息  resultMap可以复用前面的-->
+    <select id="selectByCid" resultMap="productIndexRM">
+        SELECT id, title, price, url, view_count, sale_count
+        FROM product
+        WHERE category_id = #{id}
+    </select>
+
+    <!--根据搜索信息进行模糊查询商品信息   CONCAT()会将里面各个引号内的内容同化到一个引号内 例:CONCAT('%','%')->%%  -->
+    <select id="selectByWd" resultMap="productIndexRM">
+        SELECT id, title, price, url, view_count, sale_count
+        FROM product
+        WHERE title LIKE CONCAT('%',#{wd},'%')
+    </select>
 </mapper>
