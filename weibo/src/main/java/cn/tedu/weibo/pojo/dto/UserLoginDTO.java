@@ -6,12 +6,14 @@ package cn.tedu.weibo.pojo.dto;
 public class UserLoginDTO {
     private String username;
     private String password;
+    private Boolean rem;
 
     @Override
     public String toString() {
         return "UserLoginDTO{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", rem=" + rem +
                 '}';
     }
 
@@ -29,5 +31,13 @@ public class UserLoginDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getRem() {
+        return rem;
+    }
+
+    public void setRem(Boolean rem) {
+        this.rem = rem;
     }
 }

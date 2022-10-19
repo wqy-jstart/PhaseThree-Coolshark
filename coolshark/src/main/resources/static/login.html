@@ -42,6 +42,9 @@
                 <el-input type="password" v-model="user.password" placeholder="请输入密码"></el-input>
             </el-form-item>
             <el-form-item>
+                <el-checkbox v-model="user.rem">记住用户名和密码</el-checkbox><!--rem默认为false,勾选后为true-->
+            </el-form-item>
+            <el-form-item>
                 <el-button style="position: relative;right: 30px"
                         type="primary" @click="login()">登录</el-button>
             </el-form-item>
@@ -62,7 +65,8 @@
             return {
                 user:{
                     username:"",
-                    password:""
+                    password:"",
+                    rem:false//rem默认为false,勾选后为true
                 }
             }
         },
@@ -78,6 +82,22 @@
                     }
                 })
             }
+       },
+       created:function () {
+           //username=tom; password=123456
+           let arr = document.cookie.split(";");
+           //拆分后:username=tom或 password=123456两项
+           for (cookie of arr){//遍历拆分后的两项arr数组
+               let cookieArr = cookie.split("=");//按照"="拆分
+               let name = cookieArr[0].trim();//去除password前面的空格
+               let value = cookieArr[1];
+               if (name=="username"){//如果遍历的是username,说明遍历到昵称
+                   this.user.username = value;//将获取的昵称赋给绑定的username
+               }else if (name=="password"){//如果遍历的是password,说明遍历到密码
+                   this.user.password = value;//将获取的密码赋给绑定的password
+               }
+
+           }
        }
     })
 </script>

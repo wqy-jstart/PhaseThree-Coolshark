@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -40,12 +42,24 @@ public class UserController {
      * @return 返回int型(1:登陆成功 2:用户名不存在 3:密码错误)
      */
     @RequestMapping("/login")
-    public int login(@RequestBody UserLoginDTO user, HttpSession session) {//HttpSession来区分登录的不用用户
+    public int login(@RequestBody UserLoginDTO user, HttpSession session, HttpServletResponse response) {//HttpSession来区分登录的不用用户
+        System.out.println("user = " + user);
         UserVO u = mapper.selectByUsername(user.getUsername());//根据UserLoginDTO中用户登录的用户名查询UserVO里面的信息
         if (u != null) { //如果不为空说明用户名存在,然后比较密码
             if (user.getPassword().equals(u.getPassword())) {//密码一致,登录成功
                 //把通过用户名查到的对象往Session对象中保存
                 session.setAttribute("user", u);//类似Map,★这里的u为返回的UserVO对象的引用
+                //判断是否需要记住用户名和密码
+                if (user.getRem()){
+                    //创建Cookie对象 把用户名和密码装进Cookie
+                    Cookie c1 = new Cookie("username",user.getUsername());
+                    //设置用户名保存时长 单位秒
+                    c1.setMaxAge(60*60*24*30);//一个月
+                    Cookie c2 = new Cookie("password", user.getPassword());
+                    //把创建好的Cookie下发给客户端
+                    response.addCookie(c1);
+                    response.addCookie(c2);
+                }
                 return 1;//登录成功
             }
             return 3;//密码错误

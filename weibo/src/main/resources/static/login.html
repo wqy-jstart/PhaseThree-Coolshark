@@ -7,8 +7,9 @@
 <body>
 <h1>登录页面</h1>
 <div>
-    <input type="text" placeholder="用户名" v-model="user.username">
-    <input type="password" placeholder="密码" v-model="user.password">
+    <input type="text" placeholder="用户名" v-model="user.username"><br>
+    <input type="password" placeholder="密码" v-model="user.password"><br>
+    <input type="checkbox" v-model="user.rem">记住用户名和密码<br>
     <input type="button" value="登录" @click="login()">
 </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
@@ -19,7 +20,8 @@
         data:{
             user:{
                 username:'',
-                password:''
+                password:'',
+                rem:false//不勾选默认为false
             }
         },
         methods:{
@@ -34,6 +36,23 @@
                         alert("密码错误!")
                     }
                 })
+            }
+        },
+        created:function (){
+            //取出Cookie里面的用户名和密码
+            //username=tom; password=123456
+            let arr = document.cookie.split(";");
+            //遍历
+            for (let cookie of arr){
+                //username=tom或password=123456
+                let cookieArr = cookie.split("=");
+                let name = cookieArr[0].trim();//password前有空格
+                let value = cookieArr[1];
+                if (name=="username"){
+                    this.user.username=value;//这里对象用this,否则使用时v未进行初始化
+                }else if (name=="password"){
+                    this.user.password=value;
+                }
             }
         }
     })
