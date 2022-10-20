@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class UserController {
@@ -23,9 +24,9 @@ public class UserController {
      * @return 返回int值,对应登录结果
      */
     @RequestMapping("/login")
-    public int login(@RequestBody UserDTO user, HttpServletResponse response){
+    public int login(@RequestBody UserDTO user, HttpServletResponse response, HttpSession session){
         System.out.println("user="+user);
-        UserVo u = mapper.selectByUsername(user.getUsername());
+        UserVo u = mapper.selectByUsername(user.getUsername());//利用登录的用户名查询,返回UserVO
         if (u!=null) {
             if (user.getPassword().equals(u.getPassword())) {//如果密码正确
                 if (user.getRem()){//如果勾选了记住用户名密码
@@ -39,10 +40,33 @@ public class UserController {
                     response.addCookie(c1);
                     response.addCookie(c2);
                 }
+                //把当前登录的用户对象保存到Session里面
+                session.setAttribute("user",u);
                 return 1;
             }
             return 3;
         }
         return 2;
+    }
+
+    /**
+     * 处理返回当前登录的用户信息
+     * @param session 用其来获取保存的对象
+     * @return 返回查询用户的VO类型
+     */
+    @RequestMapping("/currentUser")
+    public UserVo currentUser(HttpSession session){
+        //这边传递的是对象,如果为null,在转换JSON对象过程中JS里拿到的会是空字符串
+        return (UserVo) session.getAttribute("user");
+    }
+
+    /**
+     * 处理退出登录请求
+     * @param session 理利用session对象来删除保存的用户信息
+     */
+    @RequestMapping("/logout")
+    public void logout(HttpSession session){
+        //删除session中保存的用户信息
+        session.removeAttribute("user");
     }
 }

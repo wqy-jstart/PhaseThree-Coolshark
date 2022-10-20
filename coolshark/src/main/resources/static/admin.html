@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <!-- import CSS -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+    <style>
+        /*伪类选择器*/
+        /*未访问*/
+        a:link{color: blue}
+        /*访问过*/
+        a:visited{color: crimson}
+        /*悬停*/
+        a:hover {color: purple}
+        /*点击*/
+        a:active{color: brown}
+    </style>
 </head>
 <body>
 <div id="app">
@@ -11,8 +22,8 @@
         <el-header style="background-color: #0095d7">
             <h1 style="color: white;font-size: 22px">
                 CoolShark商城后台管理系统
-                <span style="float: right;font-size: 15px">欢迎XXX回来
-                    <a href="">退出登录</a>
+                <span v-if="user.nickname!=null" style="float: right;font-size: 15px">欢迎{{user.nickname}}回来
+                    <a href="javascript:void (0)" @click="logout()">退出登录</a>
                 </span>
             </h1>
         </el-header>
@@ -174,13 +185,25 @@
                 currentIndex: "1-1",
                 categoryArr: [],
                 bannerArr: [],
-                productArr: []
+                productArr: [],
+                user: {
+                    nickname: ''
+                }
             }
         },
         methods: {
+            //退出登录
+            logout() {
+                if (confirm("您确定退出登录吗?")) {
+                    //发出退出登录请求
+                    axios.get("/logout").then(function (response) {
+                        location.href = "/";
+                    })
+                }
+            },
             //修改商品
             productUpdate(product) {//传递一个Product对象
-                location.href="/updateProduct.html?id="+product.id;
+                location.href = "/updateProduct.html?id=" + product.id;
             },
             //删除商品
             productDelete(index, product) {
@@ -262,6 +285,14 @@
             //发送请求获取所有商品的数据
             axios.get("/product/select/admin").then(function (response) {
                 v.productArr = response.data;
+            })
+            //发请求获取当前登录的用户对象
+            axios.get("/currentUser").then(function (response) {
+                v.user = response.data;
+                if (v.user == '') {
+                    alert("请先登录!")
+                    location.href = "/login.html";
+                }
             })
         }
     })
