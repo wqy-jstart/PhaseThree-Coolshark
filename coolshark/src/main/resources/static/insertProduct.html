@@ -105,6 +105,7 @@
             handleSuccess(response, file, fileList) {//图片上传成功后接收图片的url
                 //response代表服务器响应的图片路径
                 v.p.url = response
+                console.log(v.p.url)
             },
             goBack() {
                 history.back();//返回上一页面
@@ -112,7 +113,7 @@
             handleRemove(file, fileList) {
                 console.log(file, fileList);
                 //发出删除图片的请求
-                axios.get("/remove?url=" + v.url).then(function () {
+                axios.get("/remove?url=" + v.p.url).then(function () {
                     v.$message("服务器图片删除完成");
                     v.p.url='';
                 })
