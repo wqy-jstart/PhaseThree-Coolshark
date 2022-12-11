@@ -18,6 +18,7 @@ public class UploadController {
     public String upload(MultipartFile pic) throws IOException {
         //得到唯一文件名
         String fileName = pic.getOriginalFilename();
+        System.out.println(fileName);
 
         String suffix = fileName.substring(fileName.lastIndexOf("."));
         fileName = UUID.randomUUID()+suffix;
@@ -28,12 +29,14 @@ public class UploadController {
         }
         //把图片保存到指定文件夹下面   异常抛出
         String filePath = dirPath+"/"+fileName;
+        System.out.println(filePath);
         pic.transferTo(new File(filePath));
         return "/"+fileName;
     }
 
     @RequestMapping("/remove")
     public void remove(String url){
+        System.out.println(url);
         //删除指定路径的图片文件
         if (new File(dirPath+url).delete()){
             System.out.println("图片删除成功!");
