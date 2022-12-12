@@ -5,18 +5,21 @@
     <!-- import CSS -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
     <style>
-        header a{
+        header a {
             text-decoration: none;
             color: #6c6c6c;
         }
-        .el-table .el-table__cell{
+
+        .el-table .el-table__cell {
             padding: 0;
         }
-        .el-table .cell{
-            white-space: nowrap;/*设置内容不换行*/
-            text-overflow: ellipsis;/*有超出显示范围的文本时显示*/
+
+        .el-table .cell {
+            white-space: nowrap; /*设置内容不换行*/
+            text-overflow: ellipsis; /*有超出显示范围的文本时显示*/
         }
-        .p_img:hover{
+
+        .p_img:hover {
             position: relative;
             top: 5px;
             /*设置元素阴影: x偏移值 y偏移值 浓度(值越大越模糊) 范围 颜色*/
@@ -30,31 +33,36 @@
         <el-header height="150px">
             <div style="width: 1200px;margin: 0 auto">
                 <img src="imgs/logo.png" style="width: 300px;vertical-align: middle" alt="">
-                <a href="">首页</a><el-divider direction="vertical"></el-divider>
-                <a href="">热点资讯</a><el-divider direction="vertical"></el-divider>
-                <a href="">商家入驻</a><el-divider direction="vertical"></el-divider>
-                <a href="">社会招聘</a><el-divider direction="vertical"></el-divider>
-                <a href="">校园招聘</a><el-divider direction="vertical"></el-divider>
+                <a href="">首页</a>
+                <el-divider direction="vertical"></el-divider>
+                <a href="">热点资讯</a>
+                <el-divider direction="vertical"></el-divider>
+                <a href="">商家入驻</a>
+                <el-divider direction="vertical"></el-divider>
+                <a href="">社会招聘</a>
+                <el-divider direction="vertical"></el-divider>
+                <a href="">校园招聘</a>
+                <el-divider direction="vertical"></el-divider>
                 <a href="">帮助</a>
             </div>
             <!--导航菜单开始   activeIndex该属性代表默认选择菜单为第一个-->
             <div style="background-color: #82c8ec">
                 <el-menu style="width: 1200px;margin: 0 auto"
-                    :default-active="activeIndex"
-                    class="el-menu-demo"
-                    mode="horizontal"
-                    @select="handleSelect"
-                    background-color="#82c8ec"
-                    text-color="#fff"
-                    active-text-color="#fff">
+                         :default-active="activeIndex"
+                         class="el-menu-demo"
+                         mode="horizontal"
+                         @select="handleSelect"
+                         background-color="#82c8ec"
+                         text-color="#fff"
+                         active-text-color="#fff">
                     <!--v-for循环遍历List中的所有查询分类信息对象  一个index下对应一个分类-->
-                <el-menu-item  v-for="c in categoryArr" :index="c.id">{{c.name}}</el-menu-item><!--下标代表当前菜单-->
+                    <el-menu-item v-for="c in categoryArr" :index="c.id">{{c.name}}</el-menu-item><!--下标代表当前菜单-->
                     <div style="float: right;position: relative;top: 10px"><!--相对+浮动定位(往右浮动)-->
                         <el-input placeholder="请输入搜索内容" v-model="wd">
                             <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
                         </el-input>
                     </div>
-            </el-menu>
+                </el-menu>
             </div>
             <!--导航菜单结束-->
 
@@ -91,17 +99,17 @@
                     </el-card>
                 </el-col>
             </el-row>
-        <!--商品列表开始-->
+            <!--商品列表开始-->
             <el-row gutter="20">
                 <el-col style="margin: 10px 0" span="6" v-for="p in productArr">
                     <el-card>
                         <!--将图片利用超链接进行包裹-->
-                        <a :href="'detail.html?id='+p.id" >
+                        <a :href="'detail.html?id='+p.id">
                             <img class="p_img" :src="p.url" width="100%" alt="">
                         </a>
                         <div>
                             <p style="font-size: 15px;height: 40px;margin-top: 0">
-                                <a style="text-decoration: none;color: #3f3f3f" :href="'detail.html?id='+p.id" >
+                                <a style="text-decoration: none;color: #3f3f3f" :href="'detail.html?id='+p.id">
                                     {{p.title}}
                                 </a>
                             </p>
@@ -113,7 +121,7 @@
                     </el-card>
                 </el-col>
             </el-row>
-        <!--商品列表结束-->
+            <!--商品列表结束-->
         </el-main>
         <el-footer>
             <div style="height: 95px;background-image: url('imgs/wave.png')">
@@ -135,48 +143,48 @@
 <!-- import JavaScript -->
 <script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
 <script>
-   let v = new Vue({
+    let v = new Vue({
         el: '#app',
-        data: function() {
+        data: function () {
             return {
                 categoryArr: [],
-                bannerArr:[],
-                activeIndex:"",
-                wd:"",//文本框双向绑定的变量
-                topArr:[],
-                productArr:[]
+                bannerArr: [],
+                activeIndex: "",
+                wd: "",//文本框双向绑定的变量
+                topArr: [],
+                productArr: []
             }
         },
-       methods: {
-           handleSelect(key,keyPath){
-               console.log(key,keyPath);
-               //跳转到结果页面 把分类id传递过去
-               location.href="/result.html?id="+key;//这里的key代表分类的id(与index相同)
-           },
-           search(){//搜索的点击事件(搜索后跳转结果会将wd搜索内容在路径上传递过去)
-               //跳转到结果页面把搜索内容传递过去
-               location.href="/result.html?wd="+v.wd;
-           }
-       },
-       //该方法可在打开页面后直接请求数据,页面进行显示
-       created:function () {
+        methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+                //跳转到结果页面 把分类id传递过去
+                location.href = "/result.html?id=" + key;//这里的key代表分类的id(与index相同)
+            },
+            search() {//搜索的点击事件(搜索后跳转结果会将wd搜索内容在路径上传递过去)
+                //跳转到结果页面把搜索内容传递过去
+                location.href = "/result.html?wd=" + v.wd;
+            }
+        },
+        //该方法可在打开页面后直接请求数据,页面进行显示
+        created: function () {
             //发送请求获取所有分类信息对象
-           axios.get("/category/select").then(function (response) {
-               v.categoryArr = response.data;
-           })
-           //发请求获取所有轮播图信息对象
-           axios.get("/banner/select").then(function (response) {
-               v.bannerArr = response.data;
-           })
-           //发请求获取排行榜数据
-           axios.get("/product/select/top").then(function (response) {
-               v.topArr = response.data;
-           })
-           //发请求获取所有商品信息
-           axios.get("/product/select/index").then(function (response) {
-               v.productArr = response.data;
-           })
-       }
-   })
+            axios.get("/category/select").then(function (response) {
+                v.categoryArr = response.data;
+            })
+            //发请求获取所有轮播图信息对象
+            axios.get("/banner/select").then(function (response) {
+                v.bannerArr = response.data;
+            })
+            //发请求获取排行榜数据
+            axios.get("/product/select/top").then(function (response) {
+                v.topArr = response.data;
+            })
+            //发请求获取所有商品信息
+            axios.get("/product/select/index").then(function (response) {
+                v.productArr = response.data;
+            })
+        }
+    })
 </script>
 </html>
