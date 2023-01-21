@@ -1,9 +1,9 @@
 // 修改下面一行可以更待设置的时间到时出现的文字，比如"新年快乐"、"永远爱你"等。
-var zhufuyu = "新年快乐！";
+var zhufuyu = "祝大家新年快乐！";
 // 修改下面一行可以设置倒计时时间，注意格式保持不要变。
-var daojishi = "2023/1/1 00:00:00";
+var daojishi = "2023/1/22 00:00:00";
 // 修改下面一行可以设置倒计时的时候出现的提示文字。
-var tishi = "让我们一起倒计时...";
+var tishi = "让我们一起倒计时 . . .";
 
 document.getElementById("label").innerHTML = tishi;
 class Snowflake {
@@ -156,7 +156,7 @@ function goNextStep() {
   if (zhufuyu.length <=5) {
     font_size = "600%";
   } else if (zhufuyu.length <=8) {
-    font_size = "400%";
+    font_size = "300%";
   } else if (zhufuyu.length <=12) {
     font_size = "300%";
   } else if (zhufuyu.length <=15) {
